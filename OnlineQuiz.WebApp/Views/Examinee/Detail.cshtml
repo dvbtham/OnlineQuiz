@@ -1,0 +1,108 @@
+﻿@model OnlineQuiz.Common.ViewModel.AttendanceViewModel
+@{
+    ViewBag.Title = "Thông tin thí sinh";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+
+    @if (Model.ExaminationCouncil == null)
+    {
+        <div class="col-md-12">
+            <div class="alert alert-warning">Tài khoản này chưa đăng ký module thi!</div>
+        </div>
+    }
+
+        <div class="col-md-6">
+            <div class="card mb-4 box-shadow">
+                <div class="card-header"><h5>Thông tin thí sinh</h5></div>
+                <div class="alert alert-success hidden" id="alert" ></div>
+                <div class="card-body form-group-mb-0">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">ID thí sinh</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label">@Model.Examinee.ExamineeID</label>
+                            <input type="hidden" id="examineeID" value="@Model.Examinee.ExamineeID" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Họ và tên</label>
+                        <div class="col-sm-8" id="fullname">
+                            <label class="col-form-label">@Model.Examinee.FullName</label>
+                            <input type="text" class="form-control form-control-sm hidden" value="@Model.Examinee.FullName" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-8" id="dateOB">
+                            <label class="col-form-label">@Model.Examinee.DateOfBirth.ToShortDateString()</label>
+                            <input type="date" class="form-control form-control-sm hidden" value="@Model.Examinee.DateOfBirth.ToString("yyyy-MM-dd")" />
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Giới tính</label>
+                        <div class="col-sm-8" id="gender">
+                            <label class="col-form-label">@Model.Examinee.Gender</label>
+                            <select class="form-control form-control-sm hidden">
+                                <option value="true">Nam</option>
+                                <option value="false">Nữ</option>
+                            </select>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">CMND</label>
+                        <div class="col-sm-8" id="cmnd">
+                            <label class="col-form-label">@Model.Examinee.CMND</label>
+                            <input type="number" class="form-control form-control-sm hidden" value="@Model.Examinee.CMND" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <a href="#" id="cancel" class="btn btn-danger pull-right ml-5 mb-10 hidden">Hủy</a>
+            <a href="#" id="editInfo" class="btn btn-info pull-right mr-10 mb-10">Chỉnh sửa</a>
+        </div>
+    <div class="col-md-6">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header"><h5>Thông tin hội đồng thi</h5></div>
+            <div class="card-body form-group-mb-0">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Hội đồng thi</label>
+                    <div class="col-sm-8">
+                        <label class="col-form-label"><b>Trường Đại Học Đông Á</b></label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Chọn module</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("Module", ViewBag.Modules as SelectList, new { @class = "form-control form-control-sm" })
+                    </div>
+                </div>
+                <div class="form-group row" id="module">
+                    <label class="col-sm-3 col-form-label">Tên module</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("questionModule", ViewBag.QuestionModules as SelectList, new { @class = "form-control form-control-sm", disabled = "disabled" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Ngày thi</label>
+                    <div class="col-sm-8">
+                        <label class="col-form-label" id="examDate"></label>
+                    </div>
+                </div>
+
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Xuất thi </label>
+                    <div class="col-sm-8">
+                        <label class="col-form-label" id="remark"></label>
+                    </div>
+                </div>
+            </div>
+        </div>
+       
+        <a href="#" class="btn btn-primary " id="test">Vào Thi </a>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/Client/js/afterLogin.js"></script>
+}

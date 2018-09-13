@@ -1,0 +1,43 @@
+﻿@model OnlineQuiz.WebApp.Models.LoginViewModel
+@{
+    ViewBag.Title = "Đăng nhập hệ thống";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-7">
+            <h5>Thí sinh lưu ý:</h5>
+            <hr style="width: 150px; float: left; margin: 5px 0px;" />
+            <p>
+                <br />
+                @{int i = 1; }
+
+                @foreach (var item in Model.Notes)
+                {
+                <p>@i. @item.Value</p>
+                i++;
+            }
+                </p>
+            </div>
+            <div class="col-md-4">
+                <h5>Thông tin tài khoản</h5>
+                <hr />
+                @using (Html.BeginForm("Index", "Login", FormMethod.Post))
+                {
+                    @Html.AntiForgeryToken()
+                    @Html.ValidationMessage("invalid_account", new { @class = "text-danger mb-10" })
+                    <div class="form-group">
+                        @Html.TextBoxFor(x => x.ExamineeId, new { @class = "form-control", placeholder = "ID thí sinh" })
+                        @Html.ValidationMessageFor(x => x.ExamineeId, "", new { @class = "text-danger" })
+                    </div>
+                    <div class="form-group">
+                        @Html.PasswordFor(x => x.Password, new { @class = "form-control", placeholder = "Mật khẩu" })
+                        @Html.ValidationMessageFor(x => x.Password, "", new { @class = "text-danger" })
+                    </div>
+                    <button type="submit" class="btn btn-primary btn-block">Đăng Nhập</button>
+                }
+            </div>
+        </div>
+    </div>
+

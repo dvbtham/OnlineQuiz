@@ -1,0 +1,76 @@
+﻿@import url("../fonts/RobotoCondensed-Bold.ttf");
+
+.ml-10{margin-left: 10px !important;}
+.mr-10 {
+    margin-right: 10px !important;
+}
+.mt-10{margin-top: 10px !important;}
+.mt-5 {
+    margin-top: 5px !important;
+}
+.mb-5 {
+    margin-bottom: 5px !important;
+}
+.ml-5{margin-left: 5px !important;}
+.mb-10 {
+    margin-bottom: 10px !important;
+}
+
+.font-12 {
+    font-size: 12px !important;
+}
+
+.panel-heading {
+    padding-top: 2px;
+    padding-bottom: 2px;
+}
+.panel-heading a {
+    padding: 3px 7px;
+}
+
+.page-title {
+    color: #337ab7 !important;
+    text-transform: uppercase;
+    padding-left: 0px;
+}
+
+h3.page-header {
+    margin: 15px 0px;
+    font-size: 14px;
+    font-weight: bold;
+}
+
+.navbar-brand {
+    font-family: 'Roboto Condensed', sans-serif;
+    color: #337ab7 !important;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+    .navbar-brand:hover {
+        color: #018f41 !important;
+    }
+
+    td>a, td>a>i{
+        text-decoration: none;
+    }
+
+.dataTables_length label, .dataTables_filter label {
+    font-size: 12px;
+}
+
+textarea.textarea-custom {
+   column-width: 50px;
+}
+
+.panel-default {
+    border-radius: 0px;
+}
+
+.success {
+    background-color: rgba(63, 191, 63, 0.57);
+}
+
+tr .form-control {
+    font-size: 13px;
+}

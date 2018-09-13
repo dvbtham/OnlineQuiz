@@ -1,0 +1,91 @@
+﻿@model OnlineQuiz.Model.Entity.Examination
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>Examination</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamPeriod.Remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamPeriod.Remark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Duration)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Duration)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.TestNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.TestNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExellentNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExellentNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VeryGoodNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VeryGoodNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.GoodNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.GoodNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AverageNumber)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AverageNumber)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Remark)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

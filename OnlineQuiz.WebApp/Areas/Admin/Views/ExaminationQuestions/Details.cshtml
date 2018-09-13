@@ -1,0 +1,99 @@
+﻿@model OnlineQuiz.Model.Entity.ExaminationQuestion
+
+@{
+    ViewBag.Title = "Details";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Details</h2>
+
+<div>
+    <h4>ExaminationQuestion</h4>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Examination.Remark)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Examination.Remark)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Question.QuestionContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Question.QuestionContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ExamCode)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ExamCode)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.QuestionContent)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.QuestionContent)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.AAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.AAnswer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.BAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.BAnswer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.CAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.CAnswer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.DAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.DAnswer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Answer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Answer)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.ResultAnswer)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.ResultAnswer)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { id = Model.ID }) |
+    @Html.ActionLink("Back to List", "Index")
+</p>

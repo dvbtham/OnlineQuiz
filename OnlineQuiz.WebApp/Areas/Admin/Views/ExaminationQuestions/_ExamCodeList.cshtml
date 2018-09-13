@@ -1,0 +1,9 @@
+﻿@model IEnumerable<OnlineQuiz.WebApp.Areas.Admin.Models.KeyValuePair>
+@foreach (var item in Model)
+{
+    <tr>
+        <td>
+            <a href="#"> @item.Name</a>
+        </td>
+    </tr>
+}

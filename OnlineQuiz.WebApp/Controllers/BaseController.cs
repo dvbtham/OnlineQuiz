@@ -1,0 +1,20 @@
+﻿using OnlineQuiz.Common.ViewModel;
+using System.Web.Mvc;
+using System.Web.Routing;
+
+namespace OnlineQuiz.WebApp.Controllers
+{
+    public class BaseController : Controller
+    {
+        protected override void OnActionExecuting(ActionExecutingContext filterContext)
+        {
+            var session = (KeyValuePair)Session["User"];
+            if (session == null)
+            {
+                filterContext.Result = new RedirectToRouteResult(new
+                    RouteValueDictionary(new { controller = "Login", action = "Index" }));
+            }
+            base.OnActionExecuting(filterContext);
+        }
+    }
+}
