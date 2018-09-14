@@ -19,6 +19,10 @@ namespace OnlineQuiz.WebApp.Controllers
 
         public ActionResult Index(string id, byte? page = 1)
         {
+            var session = (ExamineeViewModel)Session["User"];
+            if (session.IDExaminee != id)
+                return RedirectToAction("Index", "Login");
+
             int pageSize = 2;
             int pageNumber = (page ?? 1);
             var questionList = examinationRepository.GetExaminationQuestions(id).ToList();
@@ -32,6 +36,12 @@ namespace OnlineQuiz.WebApp.Controllers
                 Examinee = accountRepository.GetAttendanceInfo(id)
             };
             return View(examVm);
+        }
+
+        [HttpPost]
+        public ActionResult Save()
+        {
+            return View();
         }
     }
 }

@@ -16,6 +16,10 @@ namespace OnlineQuiz.WebApp.Controllers
 
         public ActionResult Detail(string id)
         {
+            var session = (ExamineeViewModel)Session["User"];
+            if (session.IDExaminee != id)
+                return RedirectToAction("Index", "Login");
+
             var examineeVm = accountRepository.GetAttendanceInfo(id);
            
             return View(examineeVm);

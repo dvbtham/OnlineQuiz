@@ -2,7 +2,7 @@
 @{
     int i =  Model.Page;
     int b = 1;
-    ViewBag.Title = "Thi ";
+    ViewBag.Title = Model.Examinee.InformationTechnologySkillName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -41,28 +41,28 @@
                                 <li>
                                     <div class="form-check">
                                         <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer"> @item.AAnswer
+                                            <input type="radio" class="form-check-input" value="A" name="@(item.QuestionID)_answer"> @item.AAnswer
                                         </label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="form-check">
                                         <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer"> @item.BAnswer
+                                            <input type="radio" class="form-check-input" value="B" name="@(item.QuestionID)_answer"> @item.BAnswer
                                         </label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="form-check">
                                         <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer">@item.CAnswer
+                                            <input type="radio" class="form-check-input" value="C" name="@(item.QuestionID)_answer">@item.CAnswer
                                         </label>
                                     </div>
                                 </li>
                                 <li>
                                     <div class="form-check">
                                         <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer">@item.DAnswer
+                                            <input type="radio" class="form-check-input" value="D" name="@(item.QuestionID)_answer">@item.DAnswer
                                         </label>
                                     </div>
                                 </li>
