@@ -36,7 +36,7 @@ namespace OnlineQuiz.WebApp.Controllers
             {
                 Session["User"] = loginResult.UserInfo;
 
-                return RedirectToAction("Detail", "Examinee", new { id = loginResult.UserInfo.Key });
+                return RedirectToAction("Detail", "Examinee", new { id = loginResult.UserInfo.IDExaminee });
             }
             else
             {

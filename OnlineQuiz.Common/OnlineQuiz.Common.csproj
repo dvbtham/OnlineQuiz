@@ -80,13 +80,14 @@
     <Compile Include="StringHelper.cs" />
     <Compile Include="ViewModel\AttendanceViewModel.cs" />
     <Compile Include="ViewModel\ExaminateInfoViewModel.cs" />
-    <Compile Include="ViewModel\ExaminationCouncilViewModel.cs" />
+    <Compile Include="ViewModel\ExaminationQuestionViewModel.cs" />
     <Compile Include="ViewModel\ExamineeViewModel.cs" />
     <Compile Include="ViewModel\ExamInfoViewModel.cs" />
     <Compile Include="ViewModel\KeyValuePair.cs" />
     <Compile Include="ViewModel\LoginResult.cs" />
     <Compile Include="ViewModel\ResponseBase.cs" />
-    <Compile Include="ViewModel\UserEditViewModel.cs" />
+    <Compile Include="ViewModel\RequestEditViewModel.cs" />
+    <Compile Include="ViewModel\ExaminationViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

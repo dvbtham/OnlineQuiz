@@ -4,6 +4,10 @@
     font-size: 15px;
 }
 
+.question-item ul li {
+    padding-bottom: 3px;
+}
+
 .bg-green, .btn-primary {
     background-color: #018F41;
 }
@@ -96,14 +100,40 @@ span.text-danger.field-validation-error {
 .footer-nav {
     margin-top: 50px;
 }
-   
-    .footer-nav .pagination .page-item{
+
+    .footer-nav .pagination .page-item {
         border-radius: 0px;
         background-color: #018F41;
     }
 
-        .footer-nav .pagination .page-item a{
+        .footer-nav .pagination .page-item a {
             border-radius: 0px;
             background-color: #018F41;
             color: #FFFFFF;
         }
+
+.disabled {
+    background-color: grey !important;
+}
+
+
+.cus .card-header {
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 0px;
+}
+
+    .cus .card-header h5 {
+        font-size: 14px;
+        text-transform: uppercase;
+        font-weight: bold;
+    }
+
+.transparent {
+    text-align: center;
+    background-color: transparent !important;
+}
+
+.test {
+    border: none !important;
+}

@@ -5,64 +5,49 @@
 }
 
 <div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4 box-shadow cus">
+            <div class="card-header"><h5>Thông tin thí sinh</h5></div>
+            <div class="alert alert-success hidden" id="alert"></div>
+            <div class="card-body form-group-mb-0">
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">ID thí sinh</label>
+                    <div class="col-sm-8">
+                        <label class="col-form-label" id="examineeID">@Model.IDExaminee</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Họ và tên</label>
+                    <div class="col-sm-8" id="fullname">
+                        <label class="col-form-label">@(Model.LastName + " " + Model.FirstName)</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                    <div class="col-sm-8" id="dateOB">
+                        <label class="col-form-label">@Model.DateOfBirth.ToShortDateString()</label>
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">Giới tính</label>
+                    <div class="col-sm-8" id="gender">
+                        <label class="col-form-label">@(Model.Gender ? "Nam" : "Nữ")</label>
 
-    @if (Model.ExaminationCouncil == null)
-    {
-        <div class="col-md-12">
-            <div class="alert alert-warning">Tài khoản này chưa đăng ký module thi!</div>
-        </div>
-    }
-
-        <div class="col-md-6">
-            <div class="card mb-4 box-shadow">
-                <div class="card-header"><h5>Thông tin thí sinh</h5></div>
-                <div class="alert alert-success hidden" id="alert" ></div>
-                <div class="card-body form-group-mb-0">
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">ID thí sinh</label>
-                        <div class="col-sm-8">
-                            <label class="col-form-label">@Model.Examinee.ExamineeID</label>
-                            <input type="hidden" id="examineeID" value="@Model.Examinee.ExamineeID" />
-                        </div>
                     </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Họ và tên</label>
-                        <div class="col-sm-8" id="fullname">
-                            <label class="col-form-label">@Model.Examinee.FullName</label>
-                            <input type="text" class="form-control form-control-sm hidden" value="@Model.Examinee.FullName" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
-                        <div class="col-sm-8" id="dateOB">
-                            <label class="col-form-label">@Model.Examinee.DateOfBirth.ToShortDateString()</label>
-                            <input type="date" class="form-control form-control-sm hidden" value="@Model.Examinee.DateOfBirth.ToString("yyyy-MM-dd")" />
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">Giới tính</label>
-                        <div class="col-sm-8" id="gender">
-                            <label class="col-form-label">@Model.Examinee.Gender</label>
-                            <select class="form-control form-control-sm hidden">
-                                <option value="true">Nam</option>
-                                <option value="false">Nữ</option>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="form-group row">
-                        <label class="col-sm-3 col-form-label">CMND</label>
-                        <div class="col-sm-8" id="cmnd">
-                            <label class="col-form-label">@Model.Examinee.CMND</label>
-                            <input type="number" class="form-control form-control-sm hidden" value="@Model.Examinee.CMND" />
-                        </div>
+                </div>
+                <div class="form-group row">
+                    <label class="col-sm-3 col-form-label">CMND</label>
+                    <div class="col-sm-8" id="cmnd">
+                        <label class="col-form-label">@Model.IdentityCard</label>
                     </div>
                 </div>
             </div>
-            <a href="#" id="cancel" class="btn btn-danger pull-right ml-5 mb-10 hidden">Hủy</a>
-            <a href="#" id="editInfo" class="btn btn-info pull-right mr-10 mb-10">Chỉnh sửa</a>
         </div>
+        <a href="#" id="cancel" class="btn btn-danger pull-right ml-5 mb-10 hidden">Hủy</a>
+        <a href="#" id="editInfo" class="btn btn-info pull-right mr-10 mb-10 btn-sm">Yêu cầu sửa</a>
+    </div>
     <div class="col-md-6">
-        <div class="card mb-4 box-shadow">
+        <div class="card mb-4 box-shadow cus">
             <div class="card-header"><h5>Thông tin hội đồng thi</h5></div>
             <div class="card-body form-group-mb-0">
                 <div class="form-group row">
@@ -72,34 +57,37 @@
                     </div>
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Chọn module</label>
+                    <label class="col-sm-3 col-form-label">Tên tín chỉ</label>
                     <div class="col-sm-8">
-                        @Html.DropDownList("Module", ViewBag.Modules as SelectList, new { @class = "form-control form-control-sm" })
+                        <label class="col-form-label">@Model.InformationTechnologySkillName</label>
                     </div>
                 </div>
-                <div class="form-group row" id="module">
-                    <label class="col-sm-3 col-form-label">Tên module</label>
-                    <div class="col-sm-8">
-                        @Html.DropDownList("questionModule", ViewBag.QuestionModules as SelectList, new { @class = "form-control form-control-sm", disabled = "disabled" })
-                    </div>
-                </div>
+
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Ngày thi</label>
                     <div class="col-sm-8">
-                        <label class="col-form-label" id="examDate"></label>
+                        <label class="col-form-label">@Model.ExaminationDate.ToString("dd/MM/yyyy")</label>
                     </div>
                 </div>
 
                 <div class="form-group row">
                     <label class="col-sm-3 col-form-label">Xuất thi </label>
                     <div class="col-sm-8">
-                        <label class="col-form-label" id="remark"></label>
+                        <label class="col-form-label">@Model.Remark</label>
+
+                    </div>
+                </div>
+
+                <div class="form-group row" id="module">
+                    <label class="col-sm-3 col-form-label">Tên module</label>
+                    <div class="col-sm-8">
+                        <label class="col-form-label">@Model.QuestionModuleName</label>
                     </div>
                 </div>
             </div>
         </div>
-       
-        <a href="#" class="btn btn-primary " id="test">Vào Thi </a>
+
+        <a href="@Url.Action("Index", "Test", new { id = Model.IDExaminee })" class="btn btn-primary btn-sm">Vào Thi </a>
     </div>
 </div>
 

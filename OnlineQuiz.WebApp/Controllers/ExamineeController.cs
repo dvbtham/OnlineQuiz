@@ -17,40 +17,12 @@ namespace OnlineQuiz.WebApp.Controllers
         public ActionResult Detail(string id)
         {
             var examineeVm = accountRepository.GetAttendanceInfo(id);
-            ViewBag.Modules = examineeVm.ExaminationCouncil.Modules;
-            ViewBag.QuestionModules = examineeVm.ExaminationCouncil.QuestionModules;
+           
             return View(examineeVm);
         }
 
-        public ActionResult BasicInfo(string id)
-        {
-            var examInfo = accountRepository.GetBasicExamInfo(id);
-            return Json(new
-            {
-                data = examInfo
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult AdvanceInfo(string id, string title)
-        {
-            var examInfo = accountRepository.GetAdvcExamInfo(id, title);
-            return Json(new
-            {
-                data = examInfo
-            }, JsonRequestBehavior.AllowGet);
-        }
-
-        public ActionResult AdvanceModules(string id)
-        {
-            var examInfo = accountRepository.GetAdvcModules(id);
-            return Json(new
-            {
-                data = examInfo
-            }, JsonRequestBehavior.AllowGet);
-        }
-
         [HttpPost]
-        public ActionResult EditExamineeInfo([System.Web.Http.FromBody]UserEditViewModel data)
+        public ActionResult EditExamineeInfo([System.Web.Http.FromBody]RequestEditViewModel data)
         {
             var result = accountRepository.Edit(data);
             if (result.Status)
@@ -58,7 +30,7 @@ namespace OnlineQuiz.WebApp.Controllers
                 return Json(new
                 {
                     message = result.Message,
-                    data = (UserEditViewModel)result.Model
+                    data = (RequestEditViewModel)result.Model
                 });
             }
             else

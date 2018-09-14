@@ -1,17 +1,4 @@
-﻿function populateExamInfo() {
-    var data = JSON.parse(localStorage.getItem("examinfo"));
-
-    $("#credit").text("Tên chứng chỉ: " + data.CreditName);
-    if (data.ModuleName === "") {
-        $("#moduleName").hide();
-    }
-    else $("#moduleName").text("Tên module: " + data.ModuleName);
-
-    $("#idExaminee").text("Mã thí sinh: " + data.IDExaminee);
-    $("#fullName").text("Họ tên: " + data.FullName);
-}
-
-function startTimer(duration, display) {
+﻿function startTimer(duration, display) {
     var timer = duration, minutes, seconds;
     setInterval(function () {
         minutes = parseInt(timer / 60, 10);
@@ -32,6 +19,6 @@ jQuery(function ($) {
     var dur = 60 * 20,
         display = $('.time');
     startTimer(dur, display);
+    $(".album").removeClass("py-5");
 });
 
-populateExamInfo();

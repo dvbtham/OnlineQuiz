@@ -1,17 +1,24 @@
-﻿@{
+﻿@model OnlineQuiz.Common.ViewModel.ExaminationViewModel
+@{
+    int i =  Model.Page;
+    int b = 1;
     ViewBag.Title = "Thi ";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
 <div class="row">
     <div class="col-md-12">
-        <div class="card mb-4 box-shadow">
-            <div class="card-header">
+        <div class="card mb-4 test transparent">
+            <div class="card-header transparent">
                 <strong>Hội đồng thi: Trường ĐH Đông Á</strong>
-                <strong class="ml-15" id="credit">Tên chứng chỉ: <i class="fa fa-spin fa-spinner"></i></strong>
-                <strong class="ml-15" id="moduleName">Tên module: <i class="fa fa-spin fa-spinner"></i></strong>
-                <strong class="ml-15" id="idExaminee">Mã thí sinh: <i class="fa fa-spin fa-spinner"></i></strong>
-                <strong class="ml-15" id="fullName">Họ tên: <i class="fa fa-spin fa-spinner"></i></strong>
+                <strong class="ml-15" id="credit">Tên chứng chỉ: @Model.Examinee.InformationTechnologySkillName</strong>
+                @if (!string.IsNullOrEmpty(Model.Examinee.QuestionModuleName))
+                {
+                    <strong class="ml-15" id="moduleName">Tên module: @Model.Examinee.QuestionModuleName</strong>
+                }
+
+                <strong class="ml-15" id="idExaminee">Mã thí sinh: @Model.Examinee.IDExaminee</strong>
+                <strong class="ml-15" id="fullName">Họ tên: @(Model.Examinee.LastName + " " + Model.Examinee.FirstName)</strong>
             </div>
         </div>
         <div class="card-body">
@@ -21,80 +28,65 @@
                     <p class="time box-shadow">20:00</p>
                 </div>
                 <div class="col-md-10">
-                    <div class="question-item">
-                        <p>Câu 1. Trong word, giả sử hộp thoại Font đang hiển thị là Time New Roman, để gõ tiếng việt, trong Vietkey cần xác định bảng mã nào sau đây:</p>
-                        <ul>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
-                    <div class="question-item">
-                        <p>Câu 2. Trong word, giả sử hộp thoại Font đang hiển thị là Time New Roman, để gõ tiếng việt, trong Vietkey cần xác định bảng mã nào sau đây:</p>
-                        <ul>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                            <li>
-                                <div class="form-check">
-                                    <label class="form-check-label pointer">
-                                        <input type="radio" class="form-check-input" name="optradio">Đáp án 1
-                                    </label>
-                                </div>
-                            </li>
-                        </ul>
-                    </div>
+                    @foreach (var item in Model.ExaminationQuestions)
+                    {
+                        if (Model.Page > 1)
+                        {
+                            b = i + 1;
+                            i++;
+                        }
+                        <div class="question-item" data-id="@item.QuestionID">
+                            <p><b>Câu @b: @item.QuestionContent</b></p>
+                            <ul>
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label pointer">
+                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer"> @item.AAnswer
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label pointer">
+                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer"> @item.BAnswer
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label pointer">
+                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer">@item.CAnswer
+                                        </label>
+                                    </div>
+                                </li>
+                                <li>
+                                    <div class="form-check">
+                                        <label class="form-check-label pointer">
+                                            <input type="radio" class="form-check-input" name="@(item.QuestionID)_answer">@item.DAnswer
+                                        </label>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                        if (Model.Page == 1)
+                        {
+                            b++;
+                        }
+                    }
+
                     <div class="footer-nav">
                         <div class="row">
                             <div class="col-md-6">
                                 <ul class="pagination">
-                                    <li class="page-item"><a class="page-link" href="#">Trở về</a></li>
-                                    <li class="page-item"><a class="page-link" href="#">Câu tiếp</a></li>
+                                    @{
+                                        var isFirst = Model.Page <= 1 ? "disabled" : "";
+                                        var isEnd = Model.Page >= Model.TotalPages ? "disabled" : "";
+                                    }
+                                    <li class="page-item @isFirst"><a class="page-link @isFirst" href="@Url.Action("Index", "Test", new { page = (Model.Page - 1) })">Trở về</a></li>
+                                    <li class="page-item @isEnd"><a class="page-link @isEnd" href="@Url.Action("Index", "Test", new { page = (Model.Page + 1) })">Câu tiếp</a></li>
                                 </ul>
                             </div>
+
                             <div class="col-md-6">
                                 <ul class="pagination pull-right">
                                     <li class="page-item"><a class="page-link" href="#">Nộp bài</a></li>

@@ -3,6 +3,6 @@
     public class LoginResult
     {
         public bool Status { get; set; }
-        public KeyValuePair UserInfo { get; set; }
+        public ExamineeViewModel UserInfo { get; set; }
     }
 }

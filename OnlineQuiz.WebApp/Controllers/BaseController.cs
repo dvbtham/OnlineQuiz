@@ -8,7 +8,7 @@ namespace OnlineQuiz.WebApp.Controllers
     {
         protected override void OnActionExecuting(ActionExecutingContext filterContext)
         {
-            var session = (KeyValuePair)Session["User"];
+            var session = (ExamineeViewModel)Session["User"];
             if (session == null)
             {
                 filterContext.Result = new RedirectToRouteResult(new
