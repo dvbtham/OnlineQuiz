@@ -12,9 +12,8 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Question()
         {
-            AdvancedExamResultDetails = new HashSet<AdvancedExamResultDetail>();
-            BasicExamResultDetails = new HashSet<BasicExamResultDetail>();
             ExaminationQuestions = new HashSet<ExaminationQuestion>();
+            ExamResultDetails = new HashSet<ExamResultDetail>();
         }
 
         public Guid ID { get; set; }
@@ -45,13 +44,10 @@ namespace OnlineQuiz.Model.Entity
         public string ResultAnswer { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdvancedExamResultDetail> AdvancedExamResultDetails { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BasicExamResultDetail> BasicExamResultDetails { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExaminationQuestion> ExaminationQuestions { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamResultDetail> ExamResultDetails { get; set; }
 
         public virtual QuestionModule QuestionModule { get; set; }
 

@@ -12,8 +12,6 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public StartEndTime()
         {
-            AdvancedExamResults = new HashSet<AdvancedExamResult>();
-            BasicExamResults = new HashSet<BasicExamResult>();
             ExamScheduleAdvanceds = new HashSet<ExamScheduleAdvanced>();
             ExamScheduleBasics = new HashSet<ExamScheduleBasic>();
         }
@@ -24,12 +22,6 @@ namespace OnlineQuiz.Model.Entity
         public string TimePeriod { get; set; }
 
         public string Remark { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdvancedExamResult> AdvancedExamResults { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BasicExamResult> BasicExamResults { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamScheduleAdvanced> ExamScheduleAdvanceds { get; set; }

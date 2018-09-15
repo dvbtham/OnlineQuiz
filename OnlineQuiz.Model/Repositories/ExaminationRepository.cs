@@ -1,15 +1,14 @@
-﻿using OnlineQuiz.Model.Infrastructure;
+﻿using OnlineQuiz.Common.ViewModel;
 using OnlineQuiz.Model.Entity;
-using OnlineQuiz.Common.ViewModel;
+using OnlineQuiz.Model.Infrastructure;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using System.Linq;
 
 namespace OnlineQuiz.Model.Repositories
 {
     public interface IExaminationRepository : IRepository<Examination>
     {
-        IEnumerable<ExaminationQuestionViewModel> GetExaminationQuestions(string examinId);
+        IEnumerable<ExaminationQuestionViewModel> GetExaminationQuestions(ExamResultViewModel model);
     }
 
     public class ExaminationRepository : RepositoryBase<Examination>, IExaminationRepository
@@ -18,11 +17,18 @@ namespace OnlineQuiz.Model.Repositories
         {
         }
 
-        public IEnumerable<ExaminationQuestionViewModel> GetExaminationQuestions(string examinId)
+        public IEnumerable<ExaminationQuestionViewModel> GetExaminationQuestions(ExamResultViewModel model)
         {
-            var pars = new SqlParameter("@ExaminationID", examinId);
-            return DbContext.Database.SqlQuery<ExaminationQuestionViewModel>("spGetCauHoiCuaKyThi @ExaminationID", pars);
-          
+            var pars = new SqlParameter[] {
+                new SqlParameter("@ExamResultID", model.ID),
+                new SqlParameter("@IDExaminee", model.IDExaminee),
+                new SqlParameter("@ExaminationID", model.ExaminationID),
+                new SqlParameter("@ExamCode", model.ExamCode),
+            };
+
+            return DbContext.Database.SqlQuery<ExaminationQuestionViewModel>
+                ("spGetExaminationQuestion @ExamResultID, @IDExaminee, @ExaminationID, @ExamCode", pars);
+
         }
     }
 }

@@ -8,50 +8,6 @@ namespace OnlineQuiz.Model.Migrations
         public override void Up()
         {
             CreateTable(
-                "dbo.AdvancedExamResultDetail",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        AdvancedExamResultID = c.Guid(),
-                        QuestionID = c.Guid(),
-                        Answer = c.String(maxLength: 5, unicode: false),
-                        ResultAswer = c.String(maxLength: 250),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AdvancedExamResult", t => t.AdvancedExamResultID, cascadeDelete: true)
-                .ForeignKey("dbo.Question", t => t.QuestionID)
-                .Index(t => t.AdvancedExamResultID)
-                .Index(t => t.QuestionID);
-            
-            CreateTable(
-                "dbo.AdvancedExamResult",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        ExamPeriodID = c.Guid(),
-                        AdvancedModuleRegistrationID = c.Guid(),
-                        ExaminationQuestionID = c.Guid(),
-                        StartEndTimeID = c.Guid(),
-                        ExamineeID = c.Guid(),
-                        IDxaminee = c.Guid(),
-                        ExamCode = c.Int(),
-                        Duration = c.Int(),
-                        TrueQuestion = c.Int(),
-                        Point = c.Double(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.AdvancedModuleRegistration", t => t.AdvancedModuleRegistrationID, cascadeDelete: true)
-                .ForeignKey("dbo.Examinee", t => t.ExamineeID)
-                .ForeignKey("dbo.ExaminationQuestion", t => t.ExaminationQuestionID)
-                .ForeignKey("dbo.ExamPeriod", t => t.ExamPeriodID)
-                .ForeignKey("dbo.StartEndTime", t => t.StartEndTimeID)
-                .Index(t => t.ExamPeriodID)
-                .Index(t => t.AdvancedModuleRegistrationID)
-                .Index(t => t.ExaminationQuestionID)
-                .Index(t => t.StartEndTimeID)
-                .Index(t => t.ExamineeID);
-            
-            CreateTable(
                 "dbo.AdvancedModuleRegistration",
                 c => new
                     {
@@ -150,99 +106,49 @@ namespace OnlineQuiz.Model.Migrations
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.BasicExamResult",
+                "dbo.ExamineeExamScheduleAdvanced",
                 c => new
                     {
                         ID = c.Guid(nullable: false),
-                        ExamPeriodID = c.Guid(),
-                        RegistrationID = c.Guid(),
-                        ExaminationQuestionID = c.Guid(),
-                        StartEndTimeID = c.Guid(),
+                        ExamScheduleAdvancedID = c.Guid(),
                         ExamineeID = c.Guid(),
-                        IDxaminee = c.Guid(),
-                        ExamCode = c.Int(),
-                        Duration = c.Int(),
-                        TrueQuestion = c.Int(),
-                        Point = c.Double(),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.ExaminationQuestion", t => t.ExaminationQuestionID)
-                .ForeignKey("dbo.Registration", t => t.RegistrationID, cascadeDelete: true)
-                .ForeignKey("dbo.ExamPeriod", t => t.ExamPeriodID)
                 .ForeignKey("dbo.Examinee", t => t.ExamineeID)
-                .ForeignKey("dbo.StartEndTime", t => t.StartEndTimeID)
-                .Index(t => t.ExamPeriodID)
-                .Index(t => t.RegistrationID)
-                .Index(t => t.ExaminationQuestionID)
-                .Index(t => t.StartEndTimeID)
+                .ForeignKey("dbo.ExamScheduleAdvanced", t => t.ExamScheduleAdvancedID, cascadeDelete: true)
+                .Index(t => t.ExamScheduleAdvancedID)
                 .Index(t => t.ExamineeID);
             
             CreateTable(
-                "dbo.BasicExamResultDetail",
+                "dbo.ExamineeInformationTechnologySkill",
                 c => new
                     {
-                        ID = c.Guid(nullable: false),
-                        BasicExamResultID = c.Guid(),
-                        QuesionID = c.Guid(),
-                        Answer = c.String(maxLength: 5, unicode: false),
-                        ResultAswer = c.String(maxLength: 250),
+                        ExamineeID = c.Guid(nullable: false),
+                        InformationTechnologySkillID = c.Guid(nullable: false),
+                        DateOfCertification = c.DateTime(storeType: "date"),
+                        Remark = c.String(maxLength: 255),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Question", t => t.QuesionID)
-                .ForeignKey("dbo.BasicExamResult", t => t.BasicExamResultID, cascadeDelete: true)
-                .Index(t => t.BasicExamResultID)
-                .Index(t => t.QuesionID);
+                .PrimaryKey(t => new { t.ExamineeID, t.InformationTechnologySkillID })
+                .ForeignKey("dbo.Examinee", t => t.ExamineeID, cascadeDelete: true)
+                .ForeignKey("dbo.InformationTechnologySkill", t => t.InformationTechnologySkillID, cascadeDelete: true)
+                .Index(t => t.ExamineeID)
+                .Index(t => t.InformationTechnologySkillID);
             
             CreateTable(
-                "dbo.Question",
+                "dbo.InformationTechnologySkill",
                 c => new
                     {
                         ID = c.Guid(nullable: false),
-                        QuestionModuleID = c.Guid(),
-                        QuestionClassificationID = c.Guid(),
-                        QuestionContent = c.String(maxLength: 450),
-                        AAnswer = c.String(maxLength: 255),
-                        BAnswer = c.String(maxLength: 255),
-                        CAnswer = c.String(maxLength: 255),
-                        DAnswer = c.String(maxLength: 255),
-                        Answer = c.String(maxLength: 1, unicode: false),
-                        ResultAnswer = c.String(maxLength: 255),
+                        Name = c.String(maxLength: 100),
                     })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.QuestionModule", t => t.QuestionModuleID, cascadeDelete: true)
-                .ForeignKey("dbo.QuestionClassification", t => t.QuestionClassificationID, cascadeDelete: true)
-                .Index(t => t.QuestionModuleID)
-                .Index(t => t.QuestionClassificationID);
-            
-            CreateTable(
-                "dbo.ExaminationQuestion",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        ExaminationID = c.Guid(),
-                        ExamCode = c.Int(),
-                        QuestionID = c.Guid(),
-                        QuestionContent = c.String(maxLength: 450),
-                        AAnswer = c.String(maxLength: 255),
-                        BAnswer = c.String(maxLength: 255),
-                        CAnswer = c.String(maxLength: 255),
-                        DAnswer = c.String(maxLength: 255),
-                        Answer = c.String(maxLength: 1, unicode: false),
-                        ResultAnswer = c.String(maxLength: 255),
-                        Status = c.Boolean(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Examination", t => t.ExaminationID, cascadeDelete: true)
-                .ForeignKey("dbo.Question", t => t.QuestionID, cascadeDelete: true)
-                .Index(t => t.ExaminationID)
-                .Index(t => t.QuestionID);
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Examination",
                 c => new
                     {
                         ID = c.Guid(nullable: false),
-                        ExamPeriodID = c.Guid(),
+                        InformationTechnologySkillID = c.Guid(),
                         Duration = c.Int(),
                         QuestionNumber = c.Int(),
                         TestNumber = c.Int(),
@@ -253,8 +159,8 @@ namespace OnlineQuiz.Model.Migrations
                         Remark = c.String(maxLength: 255),
                     })
                 .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.ExamPeriod", t => t.ExamPeriodID, cascadeDelete: true)
-                .Index(t => t.ExamPeriodID);
+                .ForeignKey("dbo.InformationTechnologySkill", t => t.InformationTechnologySkillID)
+                .Index(t => t.InformationTechnologySkillID);
             
             CreateTable(
                 "dbo.ExaminationModule",
@@ -289,28 +195,104 @@ namespace OnlineQuiz.Model.Migrations
                 .Index(t => t.InformationTechnologySkillID);
             
             CreateTable(
-                "dbo.InformationTechnologySkill",
+                "dbo.Question",
                 c => new
                     {
                         ID = c.Guid(nullable: false),
-                        Name = c.String(maxLength: 100),
+                        QuestionModuleID = c.Guid(),
+                        QuestionClassificationID = c.Guid(),
+                        QuestionContent = c.String(maxLength: 450),
+                        AAnswer = c.String(maxLength: 255),
+                        BAnswer = c.String(maxLength: 255),
+                        CAnswer = c.String(maxLength: 255),
+                        DAnswer = c.String(maxLength: 255),
+                        Answer = c.String(maxLength: 1, unicode: false),
+                        ResultAnswer = c.String(maxLength: 255),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.QuestionClassification", t => t.QuestionClassificationID, cascadeDelete: true)
+                .ForeignKey("dbo.QuestionModule", t => t.QuestionModuleID, cascadeDelete: true)
+                .Index(t => t.QuestionModuleID)
+                .Index(t => t.QuestionClassificationID);
+            
+            CreateTable(
+                "dbo.ExaminationQuestion",
+                c => new
+                    {
+                        ID = c.Guid(nullable: false),
+                        ExaminationID = c.Guid(),
+                        ExamCode = c.Int(),
+                        QuestionID = c.Guid(),
+                        QuestionContent = c.String(maxLength: 450),
+                        AAnswer = c.String(maxLength: 255),
+                        BAnswer = c.String(maxLength: 255),
+                        CAnswer = c.String(maxLength: 255),
+                        DAnswer = c.String(maxLength: 255),
+                        Answer = c.String(maxLength: 1, unicode: false),
+                        ResultAnswer = c.String(maxLength: 255),
+                        Status = c.Boolean(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Question", t => t.QuestionID, cascadeDelete: true)
+                .ForeignKey("dbo.Examination", t => t.ExaminationID, cascadeDelete: true)
+                .Index(t => t.ExaminationID)
+                .Index(t => t.QuestionID);
+            
+            CreateTable(
+                "dbo.ExamResultDetail",
+                c => new
+                    {
+                        ExamResultID = c.Guid(nullable: false),
+                        QuesionID = c.Guid(nullable: false),
+                        Answer = c.String(maxLength: 1, unicode: false),
+                        ResultAnswer = c.String(maxLength: 250),
+                    })
+                .PrimaryKey(t => new { t.ExamResultID, t.QuesionID })
+                .ForeignKey("dbo.ExamResult", t => t.ExamResultID, cascadeDelete: true)
+                .ForeignKey("dbo.Question", t => t.QuesionID)
+                .Index(t => t.ExamResultID)
+                .Index(t => t.QuesionID);
+            
+            CreateTable(
+                "dbo.ExamResult",
+                c => new
+                    {
+                        ID = c.Guid(nullable: false),
+                        ExamineeID = c.Guid(),
+                        IDExaminee = c.String(maxLength: 50, unicode: false),
+                        ExaminationID = c.Guid(),
+                        ExamCode = c.Int(),
+                        DateOfTest = c.DateTime(),
+                        Duration = c.Int(),
+                        TrueQuestion = c.Int(),
+                        Point = c.Double(),
+                    })
+                .PrimaryKey(t => t.ID)
+                .ForeignKey("dbo.Examination", t => t.ExaminationID)
+                .ForeignKey("dbo.Examinee", t => t.ExamineeID)
+                .Index(t => t.ExamineeID)
+                .Index(t => t.ExaminationID);
+            
+            CreateTable(
+                "dbo.QuestionClassification",
+                c => new
+                    {
+                        ID = c.Guid(nullable: false),
+                        Name = c.String(maxLength: 50),
                     })
                 .PrimaryKey(t => t.ID);
             
             CreateTable(
-                "dbo.ExamineeInformationTechnologySkill",
+                "dbo.ExamPeriod",
                 c => new
                     {
-                        ExamineeID = c.Guid(nullable: false),
-                        InformationTechnologySkillID = c.Guid(nullable: false),
-                        DateOfCertification = c.DateTime(storeType: "date"),
+                        ID = c.Guid(nullable: false),
+                        Name = c.String(maxLength: 255),
+                        StartDate = c.DateTime(storeType: "date"),
+                        EndDate = c.DateTime(storeType: "date"),
                         Remark = c.String(maxLength: 255),
                     })
-                .PrimaryKey(t => new { t.ExamineeID, t.InformationTechnologySkillID })
-                .ForeignKey("dbo.Examinee", t => t.ExamineeID, cascadeDelete: true)
-                .ForeignKey("dbo.InformationTechnologySkill", t => t.InformationTechnologySkillID, cascadeDelete: true)
-                .Index(t => t.ExamineeID)
-                .Index(t => t.InformationTechnologySkillID);
+                .PrimaryKey(t => t.ID);
             
             CreateTable(
                 "dbo.Registration",
@@ -331,18 +313,6 @@ namespace OnlineQuiz.Model.Migrations
                 .Index(t => t.ExamPeriodID);
             
             CreateTable(
-                "dbo.ExamPeriod",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        Name = c.String(maxLength: 255),
-                        StartDate = c.DateTime(storeType: "date"),
-                        EndDate = c.DateTime(storeType: "date"),
-                        Remark = c.String(maxLength: 255),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
                 "dbo.IDExamineeRegistration",
                 c => new
                     {
@@ -354,39 +324,6 @@ namespace OnlineQuiz.Model.Migrations
                 .PrimaryKey(t => new { t.RegistrationID, t.IDExaminee })
                 .ForeignKey("dbo.Registration", t => t.RegistrationID, cascadeDelete: true)
                 .Index(t => t.RegistrationID);
-            
-            CreateTable(
-                "dbo.QuestionClassification",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        Name = c.String(maxLength: 50),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.StartEndTime",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        TimePeriod = c.String(maxLength: 100, unicode: false),
-                        Remark = c.String(),
-                    })
-                .PrimaryKey(t => t.ID);
-            
-            CreateTable(
-                "dbo.ExamineeExamScheduleAdvanced",
-                c => new
-                    {
-                        ID = c.Guid(nullable: false),
-                        ExamScheduleAdvancedID = c.Guid(),
-                        ExamineeID = c.Guid(),
-                    })
-                .PrimaryKey(t => t.ID)
-                .ForeignKey("dbo.Examinee", t => t.ExamineeID)
-                .ForeignKey("dbo.ExamScheduleAdvanced", t => t.ExamScheduleAdvancedID, cascadeDelete: true)
-                .Index(t => t.ExamScheduleAdvancedID)
-                .Index(t => t.ExamineeID);
             
             CreateTable(
                 "dbo.Student",
@@ -423,6 +360,16 @@ namespace OnlineQuiz.Model.Migrations
                     {
                         ID = c.Guid(nullable: false),
                         Name = c.String(maxLength: 255),
+                    })
+                .PrimaryKey(t => t.ID);
+            
+            CreateTable(
+                "dbo.StartEndTime",
+                c => new
+                    {
+                        ID = c.Guid(nullable: false),
+                        TimePeriod = c.String(maxLength: 100, unicode: false),
+                        Remark = c.String(),
                     })
                 .PrimaryKey(t => t.ID);
             
@@ -471,6 +418,19 @@ namespace OnlineQuiz.Model.Migrations
                     })
                 .PrimaryKey(t => t.ID);
             
+            CreateTable(
+                "dbo.ExaminationOfExamPeriod",
+                c => new
+                    {
+                        ExaminationID = c.Guid(nullable: false),
+                        ExamPeriodID = c.Guid(nullable: false),
+                    })
+                .PrimaryKey(t => new { t.ExaminationID, t.ExamPeriodID })
+                .ForeignKey("dbo.Examination", t => t.ExaminationID, cascadeDelete: true)
+                .ForeignKey("dbo.ExamPeriod", t => t.ExamPeriodID, cascadeDelete: true)
+                .Index(t => t.ExaminationID)
+                .Index(t => t.ExamPeriodID);
+            
         }
         
         public override void Down()
@@ -478,73 +438,64 @@ namespace OnlineQuiz.Model.Migrations
             DropForeignKey("dbo.ExamScheduleAdvanced", "AdvancedModuleRegistrationID", "dbo.AdvancedModuleRegistration");
             DropForeignKey("dbo.ExamineeExamScheduleAdvanced", "ExamScheduleAdvancedID", "dbo.ExamScheduleAdvanced");
             DropForeignKey("dbo.ExamScheduleBasic", "ExaminationRoomID", "dbo.ExaminationRoom");
+            DropForeignKey("dbo.ExamScheduleBasic", "StartEndTimeID", "dbo.StartEndTime");
+            DropForeignKey("dbo.ExamScheduleAdvanced", "StartEndTimeID", "dbo.StartEndTime");
             DropForeignKey("dbo.ExamineeExamScheduleBasic", "ExamScheduleBasicID", "dbo.ExamScheduleBasic");
             DropForeignKey("dbo.Student", "ExamineeID", "dbo.Examinee");
             DropForeignKey("dbo.Student", "MajorClassID", "dbo.MajorClass");
             DropForeignKey("dbo.MajorClass", "FacultyID", "dbo.Faculty");
             DropForeignKey("dbo.Registration", "ExamineeID", "dbo.Examinee");
-            DropForeignKey("dbo.ExamineeExamScheduleBasic", "ExamineeID", "dbo.Examinee");
-            DropForeignKey("dbo.ExamineeExamScheduleAdvanced", "ExamineeID", "dbo.Examinee");
-            DropForeignKey("dbo.ExamScheduleBasic", "StartEndTimeID", "dbo.StartEndTime");
-            DropForeignKey("dbo.ExamScheduleAdvanced", "StartEndTimeID", "dbo.StartEndTime");
-            DropForeignKey("dbo.BasicExamResult", "StartEndTimeID", "dbo.StartEndTime");
-            DropForeignKey("dbo.AdvancedExamResult", "StartEndTimeID", "dbo.StartEndTime");
-            DropForeignKey("dbo.BasicExamResult", "ExamineeID", "dbo.Examinee");
-            DropForeignKey("dbo.BasicExamResultDetail", "BasicExamResultID", "dbo.BasicExamResult");
-            DropForeignKey("dbo.Question", "QuestionClassificationID", "dbo.QuestionClassification");
-            DropForeignKey("dbo.ExaminationQuestion", "QuestionID", "dbo.Question");
-            DropForeignKey("dbo.ExaminationQuestion", "ExaminationID", "dbo.Examination");
-            DropForeignKey("dbo.Question", "QuestionModuleID", "dbo.QuestionModule");
             DropForeignKey("dbo.Registration", "InformationTechnologySkillID", "dbo.InformationTechnologySkill");
-            DropForeignKey("dbo.IDExamineeRegistration", "RegistrationID", "dbo.Registration");
-            DropForeignKey("dbo.Registration", "ExamPeriodID", "dbo.ExamPeriod");
-            DropForeignKey("dbo.ExamScheduleBasic", "ExamPeriodID", "dbo.ExamPeriod");
-            DropForeignKey("dbo.ExamScheduleAdvanced", "ExamPeriodID", "dbo.ExamPeriod");
-            DropForeignKey("dbo.Examination", "ExamPeriodID", "dbo.ExamPeriod");
-            DropForeignKey("dbo.BasicExamResult", "ExamPeriodID", "dbo.ExamPeriod");
-            DropForeignKey("dbo.AdvancedExamResult", "ExamPeriodID", "dbo.ExamPeriod");
-            DropForeignKey("dbo.BasicExamResult", "RegistrationID", "dbo.Registration");
-            DropForeignKey("dbo.AdvancedModuleRegistration", "RegistrationID", "dbo.Registration");
             DropForeignKey("dbo.QuestionModule", "InformationTechnologySkillID", "dbo.InformationTechnologySkill");
             DropForeignKey("dbo.ExamineeInformationTechnologySkill", "InformationTechnologySkillID", "dbo.InformationTechnologySkill");
-            DropForeignKey("dbo.ExamineeInformationTechnologySkill", "ExamineeID", "dbo.Examinee");
+            DropForeignKey("dbo.Examination", "InformationTechnologySkillID", "dbo.InformationTechnologySkill");
+            DropForeignKey("dbo.ExaminationOfExamPeriod", "ExamPeriodID", "dbo.ExamPeriod");
+            DropForeignKey("dbo.ExaminationOfExamPeriod", "ExaminationID", "dbo.Examination");
+            DropForeignKey("dbo.Registration", "ExamPeriodID", "dbo.ExamPeriod");
+            DropForeignKey("dbo.IDExamineeRegistration", "RegistrationID", "dbo.Registration");
+            DropForeignKey("dbo.AdvancedModuleRegistration", "RegistrationID", "dbo.Registration");
+            DropForeignKey("dbo.ExamScheduleBasic", "ExamPeriodID", "dbo.ExamPeriod");
+            DropForeignKey("dbo.ExamScheduleAdvanced", "ExamPeriodID", "dbo.ExamPeriod");
+            DropForeignKey("dbo.ExaminationQuestion", "ExaminationID", "dbo.Examination");
+            DropForeignKey("dbo.Question", "QuestionModuleID", "dbo.QuestionModule");
+            DropForeignKey("dbo.Question", "QuestionClassificationID", "dbo.QuestionClassification");
+            DropForeignKey("dbo.ExamResultDetail", "QuesionID", "dbo.Question");
+            DropForeignKey("dbo.ExamResultDetail", "ExamResultID", "dbo.ExamResult");
+            DropForeignKey("dbo.ExamResult", "ExamineeID", "dbo.Examinee");
+            DropForeignKey("dbo.ExamResult", "ExaminationID", "dbo.Examination");
+            DropForeignKey("dbo.ExaminationQuestion", "QuestionID", "dbo.Question");
             DropForeignKey("dbo.ExaminationModule", "QuestionModuleID", "dbo.QuestionModule");
             DropForeignKey("dbo.AdvancedModuleRegistration", "QuestionModuleID", "dbo.QuestionModule");
             DropForeignKey("dbo.ExaminationModule", "ExaminationID", "dbo.Examination");
-            DropForeignKey("dbo.BasicExamResult", "ExaminationQuestionID", "dbo.ExaminationQuestion");
-            DropForeignKey("dbo.AdvancedExamResult", "ExaminationQuestionID", "dbo.ExaminationQuestion");
-            DropForeignKey("dbo.BasicExamResultDetail", "QuesionID", "dbo.Question");
-            DropForeignKey("dbo.AdvancedExamResultDetail", "QuestionID", "dbo.Question");
-            DropForeignKey("dbo.AdvancedExamResult", "ExamineeID", "dbo.Examinee");
+            DropForeignKey("dbo.ExamineeInformationTechnologySkill", "ExamineeID", "dbo.Examinee");
+            DropForeignKey("dbo.ExamineeExamScheduleBasic", "ExamineeID", "dbo.Examinee");
+            DropForeignKey("dbo.ExamineeExamScheduleAdvanced", "ExamineeID", "dbo.Examinee");
             DropForeignKey("dbo.ExamScheduleAdvanced", "ExaminationRoomID", "dbo.ExaminationRoom");
-            DropForeignKey("dbo.AdvancedExamResult", "AdvancedModuleRegistrationID", "dbo.AdvancedModuleRegistration");
-            DropForeignKey("dbo.AdvancedExamResultDetail", "AdvancedExamResultID", "dbo.AdvancedExamResult");
+            DropIndex("dbo.ExaminationOfExamPeriod", new[] { "ExamPeriodID" });
+            DropIndex("dbo.ExaminationOfExamPeriod", new[] { "ExaminationID" });
             DropIndex("dbo.MajorClass", new[] { "FacultyID" });
             DropIndex("dbo.Student", new[] { "MajorClassID" });
             DropIndex("dbo.Student", new[] { "ExamineeID" });
-            DropIndex("dbo.ExamineeExamScheduleAdvanced", new[] { "ExamineeID" });
-            DropIndex("dbo.ExamineeExamScheduleAdvanced", new[] { "ExamScheduleAdvancedID" });
             DropIndex("dbo.IDExamineeRegistration", new[] { "RegistrationID" });
             DropIndex("dbo.Registration", new[] { "ExamPeriodID" });
             DropIndex("dbo.Registration", new[] { "InformationTechnologySkillID" });
             DropIndex("dbo.Registration", new[] { "ExamineeID" });
-            DropIndex("dbo.ExamineeInformationTechnologySkill", new[] { "InformationTechnologySkillID" });
-            DropIndex("dbo.ExamineeInformationTechnologySkill", new[] { "ExamineeID" });
-            DropIndex("dbo.QuestionModule", new[] { "InformationTechnologySkillID" });
-            DropIndex("dbo.ExaminationModule", new[] { "QuestionModuleID" });
-            DropIndex("dbo.ExaminationModule", new[] { "ExaminationID" });
-            DropIndex("dbo.Examination", new[] { "ExamPeriodID" });
+            DropIndex("dbo.ExamResult", new[] { "ExaminationID" });
+            DropIndex("dbo.ExamResult", new[] { "ExamineeID" });
+            DropIndex("dbo.ExamResultDetail", new[] { "QuesionID" });
+            DropIndex("dbo.ExamResultDetail", new[] { "ExamResultID" });
             DropIndex("dbo.ExaminationQuestion", new[] { "QuestionID" });
             DropIndex("dbo.ExaminationQuestion", new[] { "ExaminationID" });
             DropIndex("dbo.Question", new[] { "QuestionClassificationID" });
             DropIndex("dbo.Question", new[] { "QuestionModuleID" });
-            DropIndex("dbo.BasicExamResultDetail", new[] { "QuesionID" });
-            DropIndex("dbo.BasicExamResultDetail", new[] { "BasicExamResultID" });
-            DropIndex("dbo.BasicExamResult", new[] { "ExamineeID" });
-            DropIndex("dbo.BasicExamResult", new[] { "StartEndTimeID" });
-            DropIndex("dbo.BasicExamResult", new[] { "ExaminationQuestionID" });
-            DropIndex("dbo.BasicExamResult", new[] { "RegistrationID" });
-            DropIndex("dbo.BasicExamResult", new[] { "ExamPeriodID" });
+            DropIndex("dbo.QuestionModule", new[] { "InformationTechnologySkillID" });
+            DropIndex("dbo.ExaminationModule", new[] { "QuestionModuleID" });
+            DropIndex("dbo.ExaminationModule", new[] { "ExaminationID" });
+            DropIndex("dbo.Examination", new[] { "InformationTechnologySkillID" });
+            DropIndex("dbo.ExamineeInformationTechnologySkill", new[] { "InformationTechnologySkillID" });
+            DropIndex("dbo.ExamineeInformationTechnologySkill", new[] { "ExamineeID" });
+            DropIndex("dbo.ExamineeExamScheduleAdvanced", new[] { "ExamineeID" });
+            DropIndex("dbo.ExamineeExamScheduleAdvanced", new[] { "ExamScheduleAdvancedID" });
             DropIndex("dbo.ExamineeExamScheduleBasic", new[] { "ExamineeID" });
             DropIndex("dbo.ExamineeExamScheduleBasic", new[] { "ExamScheduleBasicID" });
             DropIndex("dbo.ExamScheduleBasic", new[] { "ExaminationRoomID" });
@@ -556,43 +507,35 @@ namespace OnlineQuiz.Model.Migrations
             DropIndex("dbo.ExamScheduleAdvanced", new[] { "AdvancedModuleRegistrationID" });
             DropIndex("dbo.AdvancedModuleRegistration", new[] { "QuestionModuleID" });
             DropIndex("dbo.AdvancedModuleRegistration", new[] { "RegistrationID" });
-            DropIndex("dbo.AdvancedExamResult", new[] { "ExamineeID" });
-            DropIndex("dbo.AdvancedExamResult", new[] { "StartEndTimeID" });
-            DropIndex("dbo.AdvancedExamResult", new[] { "ExaminationQuestionID" });
-            DropIndex("dbo.AdvancedExamResult", new[] { "AdvancedModuleRegistrationID" });
-            DropIndex("dbo.AdvancedExamResult", new[] { "ExamPeriodID" });
-            DropIndex("dbo.AdvancedExamResultDetail", new[] { "QuestionID" });
-            DropIndex("dbo.AdvancedExamResultDetail", new[] { "AdvancedExamResultID" });
+            DropTable("dbo.ExaminationOfExamPeriod");
             DropTable("dbo.PracticeExamQuestions");
             DropTable("dbo.Note");
             DropTable("dbo.Manager");
             DropTable("dbo.LocationExam");
+            DropTable("dbo.StartEndTime");
             DropTable("dbo.Faculty");
             DropTable("dbo.MajorClass");
             DropTable("dbo.Student");
-            DropTable("dbo.ExamineeExamScheduleAdvanced");
-            DropTable("dbo.StartEndTime");
-            DropTable("dbo.QuestionClassification");
             DropTable("dbo.IDExamineeRegistration");
-            DropTable("dbo.ExamPeriod");
             DropTable("dbo.Registration");
-            DropTable("dbo.ExamineeInformationTechnologySkill");
-            DropTable("dbo.InformationTechnologySkill");
+            DropTable("dbo.ExamPeriod");
+            DropTable("dbo.QuestionClassification");
+            DropTable("dbo.ExamResult");
+            DropTable("dbo.ExamResultDetail");
+            DropTable("dbo.ExaminationQuestion");
+            DropTable("dbo.Question");
             DropTable("dbo.QuestionModule");
             DropTable("dbo.ExaminationModule");
             DropTable("dbo.Examination");
-            DropTable("dbo.ExaminationQuestion");
-            DropTable("dbo.Question");
-            DropTable("dbo.BasicExamResultDetail");
-            DropTable("dbo.BasicExamResult");
+            DropTable("dbo.InformationTechnologySkill");
+            DropTable("dbo.ExamineeInformationTechnologySkill");
+            DropTable("dbo.ExamineeExamScheduleAdvanced");
             DropTable("dbo.Examinee");
             DropTable("dbo.ExamineeExamScheduleBasic");
             DropTable("dbo.ExamScheduleBasic");
             DropTable("dbo.ExaminationRoom");
             DropTable("dbo.ExamScheduleAdvanced");
             DropTable("dbo.AdvancedModuleRegistration");
-            DropTable("dbo.AdvancedExamResult");
-            DropTable("dbo.AdvancedExamResultDetail");
         }
     }
 }

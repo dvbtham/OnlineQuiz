@@ -1,10 +1,9 @@
 ﻿@model OnlineQuiz.Common.ViewModel.ExaminationViewModel
 @{
-    int i =  Model.Page;
-    int b = 1;
     ViewBag.Title = Model.Examinee.InformationTechnologySkillName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
+<input type="hidden" id="ExamResultID" value="@Model.ExamResultID" />
 
 <div class="row">
     <div class="col-md-12">
@@ -17,7 +16,7 @@
                     <strong class="ml-15" id="moduleName">Tên module: @Model.Examinee.QuestionModuleName</strong>
                 }
 
-                <strong class="ml-15" id="idExaminee">Mã thí sinh: @Model.Examinee.IDExaminee</strong>
+                <strong class="ml-15" id="idExaminee">Mã thí sinh: <span>@Model.Examinee.IDExaminee</span></strong>
                 <strong class="ml-15" id="fullName">Họ tên: @(Model.Examinee.LastName + " " + Model.Examinee.FirstName)</strong>
             </div>
         </div>
@@ -27,80 +26,16 @@
                     <p>Thời gian làm bài</p>
                     <p class="time box-shadow">20:00</p>
                 </div>
+
                 <div class="col-md-10">
-                    @foreach (var item in Model.ExaminationQuestions)
-                    {
-                        if (Model.Page > 1)
-                        {
-                            b = i + 1;
-                            i++;
-                        }
-                        <div class="question-item" data-id="@item.QuestionID">
-                            <p><b>Câu @b: @item.QuestionContent</b></p>
-                            <ul>
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" value="A" name="@(item.QuestionID)_answer"> @item.AAnswer
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" value="B" name="@(item.QuestionID)_answer"> @item.BAnswer
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" value="C" name="@(item.QuestionID)_answer">@item.CAnswer
-                                        </label>
-                                    </div>
-                                </li>
-                                <li>
-                                    <div class="form-check">
-                                        <label class="form-check-label pointer">
-                                            <input type="radio" class="form-check-input" value="D" name="@(item.QuestionID)_answer">@item.DAnswer
-                                        </label>
-                                    </div>
-                                </li>
-                            </ul>
-                        </div>
-                        if (Model.Page == 1)
-                        {
-                            b++;
-                        }
-                    }
-
-                    <div class="footer-nav">
-                        <div class="row">
-                            <div class="col-md-6">
-                                <ul class="pagination">
-                                    @{
-                                        var isFirst = Model.Page <= 1 ? "disabled" : "";
-                                        var isEnd = Model.Page >= Model.TotalPages ? "disabled" : "";
-                                    }
-                                    <li class="page-item @isFirst"><a class="page-link @isFirst" href="@Url.Action("Index", "Test", new { page = (Model.Page - 1) })">Trở về</a></li>
-                                    <li class="page-item @isEnd"><a class="page-link @isEnd" href="@Url.Action("Index", "Test", new { page = (Model.Page + 1) })">Câu tiếp</a></li>
-                                </ul>
-                            </div>
-
-                            <div class="col-md-6">
-                                <ul class="pagination pull-right">
-                                    <li class="page-item"><a class="page-link" href="#">Nộp bài</a></li>
-                                </ul>
-                            </div>
-                        </div>
+                    <div id="content">
+                        @Html.Partial("_Index", Model)
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </div>
-
-@section scripts{
+@section scripts {
     <script src="~/Content/Client/js/examination.js"></script>
 }
-

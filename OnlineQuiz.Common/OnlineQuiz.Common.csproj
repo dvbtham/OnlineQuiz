@@ -83,11 +83,13 @@
     <Compile Include="ViewModel\ExaminationQuestionViewModel.cs" />
     <Compile Include="ViewModel\ExamineeViewModel.cs" />
     <Compile Include="ViewModel\ExamInfoViewModel.cs" />
+    <Compile Include="ViewModel\ExamResultViewModel.cs" />
     <Compile Include="ViewModel\KeyValuePair.cs" />
     <Compile Include="ViewModel\LoginResult.cs" />
     <Compile Include="ViewModel\ResponseBase.cs" />
     <Compile Include="ViewModel\RequestEditViewModel.cs" />
     <Compile Include="ViewModel\ExaminationViewModel.cs" />
+    <Compile Include="ViewModel\SaveExamViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

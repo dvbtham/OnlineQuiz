@@ -14,11 +14,13 @@ namespace OnlineQuiz.Model.Entity
         {
             ExaminationModules = new HashSet<ExaminationModule>();
             ExaminationQuestions = new HashSet<ExaminationQuestion>();
+            ExamResults = new HashSet<ExamResult>();
+            ExamPeriods = new HashSet<ExamPeriod>();
         }
 
         public Guid ID { get; set; }
 
-        public Guid? ExamPeriodID { get; set; }
+        public Guid? InformationTechnologySkillID { get; set; }
 
         public int? Duration { get; set; }
 
@@ -43,6 +45,12 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExaminationQuestion> ExaminationQuestions { get; set; }
 
-        public virtual ExamPeriod ExamPeriod { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamResult> ExamResults { get; set; }
+
+        public virtual InformationTechnologySkill InformationTechnologySkill { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamPeriod> ExamPeriods { get; set; }
     }
 }

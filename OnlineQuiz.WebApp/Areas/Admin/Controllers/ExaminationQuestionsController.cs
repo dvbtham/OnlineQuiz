@@ -23,7 +23,7 @@ namespace OnlineQuiz.WebApp.Areas.Admin.Controllers
         // GET: Admin/ExaminationQuestions
         public async Task<ActionResult> Index()
         {
-            ViewBag.Examinations = new SelectList(db.Examinations.Include(x => x.ExamPeriod).ToList(), "ID", "ExamPeriod.Name");
+            ViewBag.Examinations = new SelectList(null, "ID", "ExamPeriod.Name");
             var examinationQuestions = db.ExaminationQuestions.Include(e => e.Examination).Include(e => e.Question);
             return View(await examinationQuestions.ToListAsync());
         }

@@ -1,6 +1,9 @@
 namespace OnlineQuiz.Model.Entity
 {
+    using System;
     using System.Data.Entity;
+    using System.ComponentModel.DataAnnotations.Schema;
+    using System.Linq;
 
     public partial class OnlineQuizDbContext : DbContext
     {
@@ -9,11 +12,7 @@ namespace OnlineQuiz.Model.Entity
         {
         }
 
-        public virtual DbSet<AdvancedExamResult> AdvancedExamResults { get; set; }
-        public virtual DbSet<AdvancedExamResultDetail> AdvancedExamResultDetails { get; set; }
         public virtual DbSet<AdvancedModuleRegistration> AdvancedModuleRegistrations { get; set; }
-        public virtual DbSet<BasicExamResult> BasicExamResults { get; set; }
-        public virtual DbSet<BasicExamResultDetail> BasicExamResultDetails { get; set; }
         public virtual DbSet<Examination> Examinations { get; set; }
         public virtual DbSet<ExaminationModule> ExaminationModules { get; set; }
         public virtual DbSet<ExaminationQuestion> ExaminationQuestions { get; set; }
@@ -23,6 +22,8 @@ namespace OnlineQuiz.Model.Entity
         public virtual DbSet<ExamineeExamScheduleBasic> ExamineeExamScheduleBasics { get; set; }
         public virtual DbSet<ExamineeInformationTechnologySkill> ExamineeInformationTechnologySkills { get; set; }
         public virtual DbSet<ExamPeriod> ExamPeriods { get; set; }
+        public virtual DbSet<ExamResult> ExamResults { get; set; }
+        public virtual DbSet<ExamResultDetail> ExamResultDetails { get; set; }
         public virtual DbSet<ExamScheduleAdvanced> ExamScheduleAdvanceds { get; set; }
         public virtual DbSet<ExamScheduleBasic> ExamScheduleBasics { get; set; }
         public virtual DbSet<Faculty> Faculties { get; set; }
@@ -42,15 +43,6 @@ namespace OnlineQuiz.Model.Entity
 
         protected override void OnModelCreating(DbModelBuilder modelBuilder)
         {
-            modelBuilder.Entity<AdvancedExamResult>()
-                .HasMany(e => e.AdvancedExamResultDetails)
-                .WithOptional(e => e.AdvancedExamResult)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<AdvancedExamResultDetail>()
-                .Property(e => e.Answer)
-                .IsUnicode(false);
-
             modelBuilder.Entity<AdvancedModuleRegistration>()
                 .Property(e => e.IDExaminee)
                 .IsUnicode(false);
@@ -60,28 +52,19 @@ namespace OnlineQuiz.Model.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<AdvancedModuleRegistration>()
-                .HasMany(e => e.AdvancedExamResults)
-                .WithOptional(e => e.AdvancedModuleRegistration)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<AdvancedModuleRegistration>()
                 .HasMany(e => e.ExamScheduleAdvanceds)
                 .WithOptional(e => e.AdvancedModuleRegistration)
                 .WillCascadeOnDelete();
-
-            modelBuilder.Entity<BasicExamResult>()
-                .HasMany(e => e.BasicExamResultDetails)
-                .WithOptional(e => e.BasicExamResult)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<BasicExamResultDetail>()
-                .Property(e => e.Answer)
-                .IsUnicode(false);
 
             modelBuilder.Entity<Examination>()
                 .HasMany(e => e.ExaminationQuestions)
                 .WithOptional(e => e.Examination)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Examination>()
+                .HasMany(e => e.ExamPeriods)
+                .WithMany(e => e.Examinations)
+                .Map(m => m.ToTable("ExaminationOfExamPeriod").MapLeftKey("ExaminationID").MapRightKey("ExamPeriodID"));
 
             modelBuilder.Entity<ExaminationQuestion>()
                 .Property(e => e.Answer)
@@ -120,11 +103,6 @@ namespace OnlineQuiz.Model.Entity
                 .WillCascadeOnDelete();
 
             modelBuilder.Entity<ExamPeriod>()
-                .HasMany(e => e.Examinations)
-                .WithOptional(e => e.ExamPeriod)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<ExamPeriod>()
                 .HasMany(e => e.ExamScheduleBasics)
                 .WithOptional(e => e.ExamPeriod)
                 .WillCascadeOnDelete();
@@ -133,6 +111,14 @@ namespace OnlineQuiz.Model.Entity
                 .HasMany(e => e.Registrations)
                 .WithOptional(e => e.ExamPeriod)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<ExamResult>()
+                .Property(e => e.IDExaminee)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<ExamResultDetail>()
+                .Property(e => e.Answer)
+                .IsUnicode(false);
 
             modelBuilder.Entity<ExamScheduleAdvanced>()
                 .HasMany(e => e.ExamineeExamScheduleAdvanceds)
@@ -201,14 +187,15 @@ namespace OnlineQuiz.Model.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<Question>()
-                .HasMany(e => e.BasicExamResultDetails)
-                .WithOptional(e => e.Question)
-                .HasForeignKey(e => e.QuesionID);
-
-            modelBuilder.Entity<Question>()
                 .HasMany(e => e.ExaminationQuestions)
                 .WithOptional(e => e.Question)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Question>()
+                .HasMany(e => e.ExamResultDetails)
+                .WithRequired(e => e.Question)
+                .HasForeignKey(e => e.QuesionID)
+                .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<QuestionClassification>()
                 .HasMany(e => e.Questions)
@@ -226,11 +213,6 @@ namespace OnlineQuiz.Model.Entity
 
             modelBuilder.Entity<Registration>()
                 .HasMany(e => e.AdvancedModuleRegistrations)
-                .WithOptional(e => e.Registration)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<Registration>()
-                .HasMany(e => e.BasicExamResults)
                 .WithOptional(e => e.Registration)
                 .WillCascadeOnDelete();
 

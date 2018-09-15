@@ -12,7 +12,6 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public AdvancedModuleRegistration()
         {
-            AdvancedExamResults = new HashSet<AdvancedExamResult>();
             ExamScheduleAdvanceds = new HashSet<ExamScheduleAdvanced>();
         }
 
@@ -27,9 +26,6 @@ namespace OnlineQuiz.Model.Entity
 
         [StringLength(255)]
         public string Password { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdvancedExamResult> AdvancedExamResults { get; set; }
 
         public virtual QuestionModule QuestionModule { get; set; }
 

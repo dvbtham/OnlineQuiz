@@ -13,7 +13,7 @@ namespace OnlineQuiz.Model.Migrations
         
         string IMigrationMetadata.Id
         {
-            get { return "201809131309152_InitDB"; }
+            get { return "201809150356255_InitDB"; }
         }
         
         string IMigrationMetadata.Source

@@ -13,7 +13,6 @@ namespace OnlineQuiz.Model.Entity
         public Registration()
         {
             AdvancedModuleRegistrations = new HashSet<AdvancedModuleRegistration>();
-            BasicExamResults = new HashSet<BasicExamResult>();
             IDExamineeRegistrations = new HashSet<IDExamineeRegistration>();
         }
 
@@ -29,9 +28,6 @@ namespace OnlineQuiz.Model.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<AdvancedModuleRegistration> AdvancedModuleRegistrations { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BasicExamResult> BasicExamResults { get; set; }
 
         public virtual Examinee Examinee { get; set; }
 

@@ -12,12 +12,10 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ExamPeriod()
         {
-            AdvancedExamResults = new HashSet<AdvancedExamResult>();
-            BasicExamResults = new HashSet<BasicExamResult>();
-            Examinations = new HashSet<Examination>();
             ExamScheduleAdvanceds = new HashSet<ExamScheduleAdvanced>();
             ExamScheduleBasics = new HashSet<ExamScheduleBasic>();
             Registrations = new HashSet<Registration>();
+            Examinations = new HashSet<Examination>();
         }
 
         public Guid ID { get; set; }
@@ -35,15 +33,6 @@ namespace OnlineQuiz.Model.Entity
         public string Remark { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdvancedExamResult> AdvancedExamResults { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BasicExamResult> BasicExamResults { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<Examination> Examinations { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamScheduleAdvanced> ExamScheduleAdvanceds { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
@@ -51,5 +40,8 @@ namespace OnlineQuiz.Model.Entity
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Examination> Examinations { get; set; }
     }
 }

@@ -12,6 +12,7 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public InformationTechnologySkill()
         {
+            Examinations = new HashSet<Examination>();
             ExamineeInformationTechnologySkills = new HashSet<ExamineeInformationTechnologySkill>();
             QuestionModules = new HashSet<QuestionModule>();
             Registrations = new HashSet<Registration>();
@@ -21,6 +22,9 @@ namespace OnlineQuiz.Model.Entity
 
         [StringLength(100)]
         public string Name { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Examination> Examinations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamineeInformationTechnologySkill> ExamineeInformationTechnologySkills { get; set; }

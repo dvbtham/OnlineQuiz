@@ -232,7 +232,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="App_Data\script-data.sql" />
-    <Content Include="App_Data\ViewAndProcedure.sql" />
+    <Content Include="App_Data\ViewAndProcedure1509.sql" />
     <Content Include="Content\Admin\css\app.css" />
     <Content Include="Content\Admin\data\flot-data.js" />
     <Content Include="Content\Admin\data\morris-data.js" />
@@ -571,6 +571,7 @@
     <Content Include="Areas\Admin\Views\Question\Index.cshtml" />
     <Content Include="Views\Examinee\Detail.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
+    <Content Include="Views\Test\_Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />

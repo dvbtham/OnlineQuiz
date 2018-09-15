@@ -24,6 +24,8 @@ namespace OnlineQuiz.Common.ViewModel
 
         public string Answer { get; set; }
 
+        public string MyAnswer { get; set; }
+
         public string ResultAnswer { get; set; }
 
         public bool? Status { get; set; }

@@ -9,13 +9,6 @@ namespace OnlineQuiz.Model.Entity
     [Table("ExaminationQuestion")]
     public partial class ExaminationQuestion
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public ExaminationQuestion()
-        {
-            AdvancedExamResults = new HashSet<AdvancedExamResult>();
-            BasicExamResults = new HashSet<BasicExamResult>();
-        }
-
         public Guid ID { get; set; }
 
         public Guid? ExaminationID { get; set; }
@@ -46,12 +39,6 @@ namespace OnlineQuiz.Model.Entity
         public string ResultAnswer { get; set; }
 
         public bool? Status { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<AdvancedExamResult> AdvancedExamResults { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<BasicExamResult> BasicExamResults { get; set; }
 
         public virtual Examination Examination { get; set; }
 
