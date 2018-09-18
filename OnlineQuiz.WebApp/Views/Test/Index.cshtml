@@ -24,12 +24,12 @@
             <div class="row">
                 <div class="col-md-2 mb-10">
                     <p>Thời gian làm bài</p>
-                    <p class="time box-shadow " id="@(Model.ExamResult.IsCompleted ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0"+ Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </p>
+                    <p class="time box-shadow " id="@(Model.ExamResult.Status ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0"+ Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </p>
                 </div>
 
                 <div class="col-md-10">
                     <div id="content">
-                        @if (Model.ExamResult.IsCompleted)
+                        @if (Model.ExamResult.Status)
                         {
                             <div class="alert alert-success">Bạn đã hoàn tất bài thi này</div>
                         }

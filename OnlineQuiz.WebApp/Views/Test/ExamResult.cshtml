@@ -1,0 +1,32 @@
+﻿@model OnlineQuiz.Model.Entity.ExamResult
+@{
+    ViewBag.Title = "Kết quả thi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var user = (OnlineQuiz.Common.ViewModel.ExamineeViewModel)Session["User"];
+}
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4">
+            <div class="card-header text-center">
+                <strong>Hội đồng thi: Trường ĐH Đông Á</strong>
+                <strong>Tên chứng chỉ: @Model.Examination.InformationTechnologySkill.Name</strong>
+
+            </div>
+        </div>
+        <div class="card-body">
+            <div class="row">
+                <div class="col-md-12">
+                    <div id="content" class="text-center">
+                        <h6><STRONG>KẾT QUẢ THI</STRONG></h6>
+                        <p> <strong>Mã thí sinh: <span>@Model.IDExaminee</span></strong></p>
+                        <p> <strong>Tên thí sinh: <span>@(user.LastName + " " + user.FirstName)</span></strong></p>
+                        <p> <strong>Thời gian làm bài: @Model.Duration</strong></p>
+                        <p> <strong>Số câu đúng: @Model.TrueQuestion/@Model.ExamResultDetails.Count</strong></p>
+                        <p> <strong>Điểm: @Model.Point</strong></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

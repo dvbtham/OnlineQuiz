@@ -36,8 +36,23 @@ namespace OnlineQuiz.WebApp.Controllers
                 return RedirectToAction("Index", "Login");
 
             var examVm = GetExaminationViewModel(id, page);
-           
+
+            if (examVm.ExamResult.Status)
+            {
+                return RedirectToAction("ExamResult", new { examineeId = id });
+            }
+
             return View(examVm);
+        }
+
+        public ActionResult ExamResult(string examineeId)
+        {
+            var session = (ExamineeViewModel)Session["User"];
+            if (session.IDExaminee != examineeId)
+                return RedirectToAction("Index", "Login");
+
+            var examResult = examResultRepository.GetExamResult(examineeId, 1);
+            return View(examResult);
         }
 
         [HttpPost]
@@ -62,10 +77,11 @@ namespace OnlineQuiz.WebApp.Controllers
             {
                 examResultRepository.CompleteTest(data.ExamResultID);
                 Update(data);
+
                 return Json(new
                 {
                     isRenderHtml = false,
-                    data = "Nộp bài hoàn tất"
+                    url = "/Test/ExamResult?examineeId=" + data.IDExaminee
                 });
             }
         }

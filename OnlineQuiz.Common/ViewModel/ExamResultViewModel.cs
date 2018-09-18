@@ -14,6 +14,6 @@ namespace OnlineQuiz.Common.ViewModel
 
         public int Duration { get; set; }
 
-        public bool IsCompleted { get; set; }
+        public bool Status { get; set; }
     }
 }

@@ -89,8 +89,10 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (res) {
-                //if (res.isRenderHtml)
+                if (res.isRenderHtml)
                     $("#content").html(res.data);
+                else
+                    window.location.href = res.url;
                
             },
             error: function () {

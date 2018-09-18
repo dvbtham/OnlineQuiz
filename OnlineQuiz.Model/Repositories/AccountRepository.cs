@@ -2,11 +2,10 @@
 using OnlineQuiz.Common.ViewModel;
 using OnlineQuiz.Model.Entity;
 using OnlineQuiz.Model.Infrastructure;
-using System.Collections.Generic;
+using System;
 using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
-using System.Web.Mvc;
 
 namespace OnlineQuiz.Model.Repositories
 {
@@ -41,7 +40,7 @@ namespace OnlineQuiz.Model.Repositories
             {
                 var pars = new SqlParameter("@IDExaminee", id);
                 var examineeId = id.Substring(0, 2);
-                if(examineeId == "CB")
+                if (examineeId == "CB")
                 {
                     var vm = DbContext.Database.SqlQuery<AttendanceViewModel>("spGetDangKyThiChuanCNTTCoBan @IDExaminee", pars).FirstOrDefault();
                     return vm;
@@ -51,29 +50,42 @@ namespace OnlineQuiz.Model.Repositories
                     var vm = DbContext.Database.SqlQuery<AttendanceViewModel>("spGetDangKyThiChuanCNTTNangCao @IDExaminee", pars).FirstOrDefault();
                     return vm;
                 }
-                
+
             }
             catch (System.Exception e)
             {
                 throw e;
             }
         }
-        
+
         public ResponseBase Edit(RequestEditViewModel viewModel)
         {
             try
             {
-                var examinee = DbContext.Examinees.FirstOrDefault(x => x.ID.ToString() == viewModel.IDExaminee && x.Status.Value == true);
+                var examineeId = Guid.NewGuid();
+                if (viewModel.IDExaminee.Contains("CB"))
+                {
+                    examineeId = DbContext.IDExamineeRegistrations.Include(x => x.Registration)
+                        .FirstOrDefault(x => x.IDExaminee == viewModel.IDExaminee).Registration.ExamineeID.Value;
+                }
+                else
+                {
+                    examineeId = DbContext.AdvancedModuleRegistrations.Include(x => x.Registration)
+                        .FirstOrDefault(x => x.IDExaminee == viewModel.IDExaminee).Registration.ExamineeID.Value;
+                }
+
+                var examinee = DbContext.Examinees.FirstOrDefault(x => x.ID == examineeId);
+
                 if (examinee == null)
                     return new ResponseBase() { Message = "Dữ liệu không tìm thấy" };
-                
+
                 examinee.Remark = viewModel.Note;
 
                 DbContext.Entry(examinee).State = EntityState.Modified;
 
                 DbContext.SaveChanges();
 
-                return new ResponseBase() { Status = true, Model = viewModel, Message = "Cập nhật thành công" };
+                return new ResponseBase() { Status = true, Model = viewModel, Message = "Yêu cầu cập nhật thông tin đã được gửi" };
             }
             catch (System.Exception e)
             {

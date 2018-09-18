@@ -173,3 +173,7 @@ span.text-danger.field-validation-error {
         font-size: 14px;
         padding: 6px 10px;
     }
+#content p {
+    padding-bottom: 0px;
+    margin-bottom: 2px;
+}

@@ -1,4 +1,10 @@
 ﻿(function () {
+    $("#cancel").on('click', function (e) {
+        e.preventDefault();
+        $("#editInfo").removeClass("mt-10").text("Yêu cầu sửa");
+        $(this).toggleClass("hidden");
+        $("#editRequest").addClass("hidden");
+    });
     function editRequest() {
         $("#editInfo").on('click', function (e) {
             e.preventDefault();
@@ -6,7 +12,7 @@
             if ($(this).text().toLowerCase() === "Gửi".toLowerCase()) {
                 const data = {
                     IDExaminee: $("#examineeID").text(),
-                    Note: $("#note").val()
+                    Note: $("#editRequest").val()
                 };
 
                 $.ajax({
@@ -15,9 +21,13 @@
                     dataType: "json",
                     contentType: "application/json; charset=utf-8",
                     data: JSON.stringify(data),
-                    success: function () {
-                        localStorage.setItem("msg", "Thông tin đã được cập nhật");
-                        window.location.reload();
+                    success: function (res) {
+                        $("#alert").removeClass("hidden").text(res.message);
+                        $("#editRequest").addClass("hidden");
+                        $("#editInfo").text("Yêu cầu sửa");
+                        setTimeout(function () {
+                            $("#alert").fadeOut();
+                        }, 5000);
                     },
                     error: function (res) {
                         console.log(res);
@@ -26,6 +36,9 @@
 
             }
             else {
+                $("#cancel").removeClass("hidden");
+                $("#editInfo").addClass("mt-10");
+                $("#editRequest").removeClass("hidden");
                 $(this).text("Gửi");
             }
         });

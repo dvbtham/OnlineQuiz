@@ -1,6 +1,7 @@
 ﻿using OnlineQuiz.Common.ViewModel;
 using OnlineQuiz.Model.Entity;
 using OnlineQuiz.Model.Infrastructure;
+using System.Data.Entity;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -8,6 +9,7 @@ namespace OnlineQuiz.Model.Repositories
 {
     public interface IExamResultRepository
     {
+        ExamResult GetExamResult(string examineeId, int examCode);
         void CompleteTest(string examResultId);
         void UpdateDuration(string examResultId, int remainingTime);
         ExamResultViewModel Get(string examineeId, int examCode);
@@ -41,7 +43,7 @@ namespace OnlineQuiz.Model.Repositories
 
             if (examResult != null)
             {
-                examResult.IsCompleted = true;
+                examResult.Status = true;
                 Update(examResult);
             }
         }
@@ -78,6 +80,11 @@ namespace OnlineQuiz.Model.Repositories
                 examResult.Duration = remainingTime;
                 Update(examResult);
             }
+        }
+
+        public ExamResult GetExamResult(string examineeId, int examCode)
+        {
+            return GetSingleByCondition(x => x.IDExaminee == examineeId && x.ExamCode == examCode, new[] { "Examination.InformationTechnologySkill" });
         }
     }
 }
