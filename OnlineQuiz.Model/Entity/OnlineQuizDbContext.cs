@@ -194,7 +194,7 @@ namespace OnlineQuiz.Model.Entity
             modelBuilder.Entity<Question>()
                 .HasMany(e => e.ExamResultDetails)
                 .WithRequired(e => e.Question)
-                .HasForeignKey(e => e.QuesionID)
+                .HasForeignKey(e => e.QuestionID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<QuestionClassification>()

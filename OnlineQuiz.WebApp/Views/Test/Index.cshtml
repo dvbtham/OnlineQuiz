@@ -3,7 +3,7 @@
     ViewBag.Title = Model.Examinee.InformationTechnologySkillName;
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
-<input type="hidden" id="ExamResultID" value="@Model.ExamResultID" />
+<input type="hidden" id="ExamResultID" value="@Model.ExamResult.ID" />
 
 <div class="row">
     <div class="col-md-12">
@@ -24,12 +24,20 @@
             <div class="row">
                 <div class="col-md-2 mb-10">
                     <p>Thời gian làm bài</p>
-                    <p class="time box-shadow">20:00</p>
+                    <p class="time box-shadow " id="@(Model.ExamResult.IsCompleted ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0"+ Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </p>
                 </div>
 
                 <div class="col-md-10">
                     <div id="content">
-                        @Html.Partial("_Index", Model)
+                        @if (Model.ExamResult.IsCompleted)
+                        {
+                            <div class="alert alert-success">Bạn đã hoàn tất bài thi này</div>
+                        }
+                        else
+                        {
+                            @Html.Partial("_Index", Model)
+                        }
+
                     </div>
                 </div>
             </div>

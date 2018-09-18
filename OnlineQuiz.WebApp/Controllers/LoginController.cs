@@ -1,4 +1,5 @@
-﻿using OnlineQuiz.Model.Repositories;
+﻿using OnlineQuiz.Common.ViewModel;
+using OnlineQuiz.Model.Repositories;
 using OnlineQuiz.Service.Services;
 using OnlineQuiz.WebApp.Models;
 using System.Web.Mvc;
@@ -9,11 +10,24 @@ namespace OnlineQuiz.WebApp.Controllers
     {
         private readonly INoteService noteService;
         private readonly IAccountRepository accountRepository;
+        private readonly IExamineeRepository examineeRepository;
+        private readonly ITechSkillRepository techSkillRepository;
+        private readonly IExamPeriodRepository examPeriodRepository;
+        private readonly IQuestionModuleRepository questionModuleRepository;
 
-        public LoginController(INoteService noteService, IAccountRepository accountRepository)
+        public LoginController(INoteService noteService, 
+            IAccountRepository accountRepository, 
+            IExamineeRepository examineeRepository,
+            ITechSkillRepository techSkillRepository,
+            IExamPeriodRepository examPeriodRepository,
+            IQuestionModuleRepository questionModuleRepository)
         {
             this.noteService = noteService;
             this.accountRepository = accountRepository;
+            this.examineeRepository = examineeRepository;
+            this.techSkillRepository = techSkillRepository;
+            this.examPeriodRepository = examPeriodRepository;
+            this.questionModuleRepository = questionModuleRepository;
         }
 
         public ActionResult Index()
@@ -44,6 +58,20 @@ namespace OnlineQuiz.WebApp.Controllers
                 return View(GetLoginViewModel());
             }
 
+        }
+
+        public ActionResult Register(string ic = null)
+        {
+            var vm = new RegisterViewModel();
+            if (!string.IsNullOrEmpty(ic))
+            {
+                vm.Examinee = examineeRepository.FindByIdentityCard(ic);
+            }
+
+            ViewBag.ExamPeriods = new SelectList(examPeriodRepository.GetKeyValueList(), "Key", "Value");
+            ViewBag.TechSkills = new SelectList(techSkillRepository.GetKeyValueList(), "Key", "Value");
+            ViewBag.Modules = new SelectList(questionModuleRepository.GetKeyValueList(), "Key", "Value");
+            return View(vm);
         }
 
         [NonAction]

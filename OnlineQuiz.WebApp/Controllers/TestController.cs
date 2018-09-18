@@ -5,9 +5,7 @@ using OnlineQuiz.Model.Repositories;
 using System;
 using System.IO;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
-using System.Web.Routing;
 
 namespace OnlineQuiz.WebApp.Controllers
 {
@@ -30,39 +28,67 @@ namespace OnlineQuiz.WebApp.Controllers
             this.examResultRepository = examResultRepository;
         }
 
-        public ActionResult Index(string id, byte? page = 1)
+        public ActionResult Index(string id)
         {
+            byte? page = 1;
             var session = (ExamineeViewModel)Session["User"];
             if (session.IDExaminee != id)
                 return RedirectToAction("Index", "Login");
 
             var examVm = GetExaminationViewModel(id, page);
-
+           
             return View(examVm);
         }
 
         [HttpPost]
         public ActionResult Save([System.Web.Http.FromBody] SaveExamViewModel data)
         {
-            var examVm = GetExaminationViewModel(data.IDExaminee, data.Page);
-
-            data.ExamResultID = examVm.ExamResultID;
-
-            var questions = JsonConvert.DeserializeObject<string[]>(data.Content);
-
-            foreach (var q in questions)
+            if (data.Page > 0)
             {
-                var answer = q.Substring(0, 1);
-                var qid = q.Substring(2);
+                examResultRepository
+                .UpdateDuration(data.ExamResultID, data.RemainingTime);
 
-                examResultRepository.Update(data.ExamResultID, qid, new KeyValuePair { Key = answer });
+                var examVm = GetExaminationViewModel(data.IDExaminee, data.Page);
+
+                Update(data);
+
+                return Json(new
+                {
+                    isRenderHtml = true,
+                    data = ConvertViewToString("_Index", examVm)
+                });
             }
+            else
+            {
+                examResultRepository.CompleteTest(data.ExamResultID);
+                Update(data);
+                return Json(new
+                {
+                    isRenderHtml = false,
+                    data = "Nộp bài hoàn tất"
+                });
+            }
+        }
 
-            unitOfWork.Commit();
+        private void Update(SaveExamViewModel data)
+        {
+            try
+            {
+                var questions = JsonConvert.DeserializeObject<string[]>(data.Content);
 
-            return Json(new {
-                data = ConvertViewToString("_Index", examVm)
-            });
+                foreach (var q in questions)
+                {
+                    var answer = q.Substring(0, 1);
+                    var qid = q.Substring(2);
+
+                    examResultRepository.UpdateDetail(data.ExamResultID, qid, new KeyValuePair { Key = answer });
+                }
+
+                unitOfWork.Commit();
+            }
+            catch (Exception)
+            {
+            }
         }
 
         private string ConvertViewToString(string viewName, object model)
@@ -90,7 +116,7 @@ namespace OnlineQuiz.WebApp.Controllers
 
             var examVm = new ExaminationViewModel
             {
-                ExamResultID = examResult.ID.ToString(),
+                ExamResult = examResult,
                 Page = page.Value,
                 TotalItems = totalCount,
                 TotalPages = (byte)Math.Ceiling((double)totalCount / pageSize),

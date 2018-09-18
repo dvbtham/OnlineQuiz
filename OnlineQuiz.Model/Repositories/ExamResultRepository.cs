@@ -8,8 +8,10 @@ namespace OnlineQuiz.Model.Repositories
 {
     public interface IExamResultRepository
     {
+        void CompleteTest(string examResultId);
+        void UpdateDuration(string examResultId, int remainingTime);
         ExamResultViewModel Get(string examineeId, int examCode);
-        void Update(string examResultId, string questionId, KeyValuePair model);
+        void UpdateDetail(string examResultId, string questionId, KeyValuePair model);
     }
 
     public class ExamResultRepository : RepositoryBase<ExamResult>, IExamResultRepository
@@ -32,14 +34,26 @@ namespace OnlineQuiz.Model.Repositories
             return examResult;
         }
 
-        public void Update(string examResultId, string questionId, KeyValuePair model)
+        public void CompleteTest(string examResultId)
+        {
+            var examResult = DbContext.ExamResults
+                .FirstOrDefault(x => x.ID.ToString() == examResultId);
+
+            if (examResult != null)
+            {
+                examResult.IsCompleted = true;
+                Update(examResult);
+            }
+        }
+
+        public void UpdateDetail(string examResultId, string questionId, KeyValuePair model)
         {
             try
             {
                 var examResult = DbContext.ExamResultDetails
-                    .FirstOrDefault(x => x.ExamResultID.ToString() == examResultId && x.QuesionID.ToString() == questionId);
+                    .FirstOrDefault(x => x.ExamResultID.ToString() == examResultId && x.QuestionID.ToString() == questionId);
 
-                if(examResult != null)
+                if (examResult != null)
                 {
                     examResult.Answer = model.Key;
                     examResult.ResultAnswer = model.Value;
@@ -52,6 +66,17 @@ namespace OnlineQuiz.Model.Repositories
             {
 
                 throw e;
+            }
+        }
+
+        public void UpdateDuration(string examResultId, int remainingTime)
+        {
+            var examResult = DbContext.ExamResults
+                .FirstOrDefault(x => x.ID.ToString() == examResultId);
+            if (examResult != null)
+            {
+                examResult.Duration = remainingTime;
+                Update(examResult);
             }
         }
     }

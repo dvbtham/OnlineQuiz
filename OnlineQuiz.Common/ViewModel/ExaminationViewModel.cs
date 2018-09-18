@@ -4,7 +4,7 @@ namespace OnlineQuiz.Common.ViewModel
 {
     public class ExaminationViewModel
     {
-        public string ExamResultID { get; set; }
+        public ExamResultViewModel ExamResult { get; set; }
         public byte Page { get; set; }
         public int TotalItems { get; set; }
         public byte TotalPages { get; set; }

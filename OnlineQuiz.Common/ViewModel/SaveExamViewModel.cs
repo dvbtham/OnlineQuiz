@@ -8,6 +8,10 @@
 
         public string ExamResultID { get; set; }
 
+        public int RemainingTime { get; set; }
+
         public string Content { get; set; }
+
+        public bool IsCompleted { get; set; } = false;
     }
 }

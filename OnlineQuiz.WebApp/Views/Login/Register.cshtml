@@ -1,0 +1,297 @@
+﻿@model OnlineQuiz.Common.ViewModel.RegisterViewModel
+@{
+    ViewBag.Title = "Đăng ký dự thi";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    ViewBag.SaveExamineeText = Model.Examinee.ID != Guid.Empty ? "Cập nhật thông tin" : "Đăng ký";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="card mb-4 box-shadow cus">
+            <div class="card-header"><h5>Khai báo thông tin thí sinh</h5></div>
+            @using (Html.BeginForm("SaveExaminee", "Registration", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken();
+                @Html.HiddenFor(x => x.Examinee.ID)
+                <div class="alert alert-success hidden" id="alert"></div>
+                <div class="card-body form-group-mb-0">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">CMND</label>
+                        <div class="col-sm-8">
+                            @Html.TextBoxFor(x => x.Examinee.IdentityCard, new { data_idc = Model.Examinee.IdentityCard, @class = "form-control form-control-sm", id = "IdentityCard" })
+                            @Html.ValidationMessageFor(x => x.Examinee.IdentityCard, "", new { @class = "text-danger mt-5" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Họ và tên</label>
+                        <div class="col-sm-8" id="fullname">
+                            @Html.TextBoxFor(x => x.Examinee.FirstName, new { id = "fname", placeholder = "Họ lót", @class = "form-control form-control-sm", style = "float:  left;margin-right: 20px;width: 149px !important;" })
+                            @Html.TextBoxFor(x => x.Examinee.LastName, new { id = "lname", placeholder = "Tên", style = "float:  left;width: 153px !important;", @class = "form-control form-control-sm" })
+                            @Html.ValidationMessageFor(x => x.Examinee.FirstName, "", new { @class = "text-danger mt-5" })
+                            @Html.ValidationMessageFor(x => x.Examinee.LastName, "", new { @class = "text-danger mt-5" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-8" id="dateOB">
+                            @Html.EditorFor(x => x.Examinee.DateOfBirth, null, new { htmlAttributes = new { id = "dob", @class = "form-control form-control-sm" } })
+                            @Html.ValidationMessageFor(x => x.Examinee.DateOfBirth, "", new { @class = "text-danger mt-5" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Giới tính</label>
+                        <div class="col-sm-8" id="gender">
+                            <div class="form-check form-check-inline mt-5">
+                                @Html.RadioButtonFor(x => x.Examinee.Gender, "true", new { id = "nam", @class = "form-check-input" })
+                                <label class="form-check-label pointer" for="nam">Nam</label>
+                            </div>
+                            <div class="form-check form-check-inline mt-5">
+                                @Html.RadioButtonFor(x => x.Examinee.Gender, "false", new { id = "nu", @class = "form-check-input" })
+                                <label class="form-check-label pointer" for="nu">Nữ</label>
+                            </div>
+                            @Html.ValidationMessageFor(x => x.Examinee.Gender, "", new { @class = "text-danger mt-5" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Điện thoại</label>
+                        <div class="col-sm-8" id="cmnd">
+                            @Html.TextBoxFor(x => x.Examinee.Mobile, new { id = "phone", @class = "form-control form-control-sm" })
+                            @Html.ValidationMessageFor(x => x.Examinee.Mobile, "", new { @class = "text-danger mt-5" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Email</label>
+                        <div class="col-sm-8" id="email">
+                            @Html.TextBoxFor(x => x.Examinee.Email, new { id = "email", @class = "form-control form-control-sm" })
+                        </div>
+                    </div>
+                    <div class="form-group row mt-10">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-8" id="email">
+                            <button type="submit" id="saveExaminee" class="btn btn-primary btn-sm btn-block">@ViewBag.SaveExamineeText</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card mb-4 box-shadow cus">
+            @using (Html.BeginForm("SaveRegistration", "Registration", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+                @Html.HiddenFor(x => x.IdentityCard, new { id = "idCard" })
+                <div class="card-header"><h5>đăng ký dự thi chứng chỉ ứng dụng cntt</h5></div>
+                <div class="card-body form-group-mb-0">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Đợt thi</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(x => x.ExamPeriod.ID, ViewBag.ExamPeriods as SelectList, new { @class = "form-control form-control-sm", id = "examPeriod" })
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Từ ngày</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label" id="fromDate"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Đến ngày</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label" id="toDate"></label>
+                        </div>
+                    </div>
+
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày đăng ký </label>
+                        <div class="col-sm-8">
+                            @Html.EditorFor(x => x.RegistrationDate, null, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                            @Html.ValidationMessageFor(x => x.RegistrationDate, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row" id="module">
+                        <label class="col-sm-3 col-form-label">Tên chứng chỉ</label>
+                        <div class="col-sm-8">
+                            @Html.HiddenFor(x => x.TechSkill.Value, new { id = "TechSkillValue" })
+                            @Html.DropDownListFor(x => x.TechSkill.Key, ViewBag.TechSkills as SelectList, new { @class = "form-control form-control-sm", id = "techSkills" })
+                        </div>
+                    </div>
+                    <div class="form-group row" id="module">
+                        <label class="col-sm-3 col-form-label">Tên module</label>
+                        <div class="col-sm-8">
+                            @Html.DropDownListFor(x => x.Module.Key, ViewBag.Modules as SelectList, new { @class = "form-control form-control-sm", id = "modules" })
+                        </div>
+                    </div>
+
+                    <div class="form-group row mt-10">
+                        <label class="col-sm-3 col-form-label"></label>
+                        <div class="col-sm-8" id="email">
+                            <button class="btn btn-primary btn-sm">Đăng ký dự thi</button>
+                            <button class="btn btn-primary btn-sm pull-right">Xem kết quả</button>
+                        </div>
+                    </div>
+                </div>
+            }
+
+        </div>
+    </div>
+
+</div>
+
+<div class="row">
+    <div class="col-md-12">
+        <div class="card mb-4 box-shadow">
+            <div class="col-md-12 mt-10">
+                <p><strong>Kết quả đăng ký chuẩn CNTT cơ bản</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>CMND</th>
+                                <th>ID dự thi</th>
+                                <th>Tên chứng chỉ</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            <div class="col-md-12">
+                <p><strong>Kết quả đăng ký chuẩn CNTT nâng cao</strong></p>
+                <div class="table-responsive">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>CMND</th>
+                                <th>ID dự thi</th>
+                                <th>Tên chứng chỉ</th>
+                                <th>Tên các module dự thi</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1</td>
+                                <td>1, 3, 5</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script>
+        $("#IdentityCard").on("keyup", function () {
+            $("#idCard").val($(this).val());
+            populateExamineeInfo($(this).val());
+            if ($(this).val() == $(this).data("idc")) {
+                $("#saveExaminee").text("Cập nhật thông tin");
+            }
+            else {
+                $("#saveExaminee").text("Đăng ký");
+            }
+        });
+
+        $("#examPeriod").on('change', function (e) {
+            populateExamperiod($(this).val());
+        });
+
+        $("#techSkills").on('change', function (e) {
+            $("#TechSkillValue").val($(this).find(":selected").text());
+            populateQuestionModules($(this).val());
+        });
+
+        $("#idCard").val($("#IdentityCard").val());
+        $("#TechSkillValue").val($("#techSkills").find(":selected").text());
+
+        function populateExamperiod(id) {
+            $.ajax({
+                url: "/Registration/PopulateExamPeriods",
+                type: "post",
+                data: {
+                    epId: id
+                },
+                success: function (res) {
+                    $("#fromDate").text(res.startDate);
+                    $("#toDate").text(res.endDate);
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Đã xảy ra lỗi");
+                }
+            });
+        }
+
+        function populateExamineeInfo(idCard) {
+            $.ajax({
+                url: "/Registration/PopulateExamineeByIdCard",
+                type: "post",
+                data: {
+                    idCard: idCard
+                },
+                success: function (res) {
+                    $("#dob").val(res.data.DateOfBirth);
+                    $("#fname").val(res.data.FirstName);
+                    $("#lname").val(res.data.LastName);
+                    $("#phone").val(res.data.Mobile);
+                    $("#email").val(res.data.Email);
+                    if (res.data.Gender)
+                        $("#nam").attr("checked", "checked");
+                    else
+                        $("#nu").attr("checked", "checked");
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Đã xảy ra lỗi");
+                }
+            });
+        }
+
+
+        function populateQuestionModules(id) {
+            $.ajax({
+                url: "/Registration/PopulateQuestionModules",
+                type: "post",
+                data: {
+                    techId: id
+                },
+                success: function (res) {
+                    var html = "";
+
+                    $.each(res.data, function (i, e) {
+                        html += "<option value='" + e.Key + "'>" + e.Value + "</option>";
+                    });
+
+                    $("#modules").html(html);
+                },
+                error: function (res) {
+                    console.log(res);
+                    alert("Đã xảy ra lỗi");
+                }
+            });
+        }
+
+        populateExamperiod($("#examPeriod").find(":selected").val());
+        populateQuestionModules($("#techSkills").find(":selected").val());
+
+    </script>
+}

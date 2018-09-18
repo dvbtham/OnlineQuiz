@@ -61,14 +61,14 @@
                 }
                 @*<li class="page-item @isFirst"><a class="page-link @isFirst" href="@Url.Action("Index", "Test", new { page = (Model.Page - 1) })">Trở về</a></li>
                     <li class="page-item @isEnd"><a class="page-link @isEnd" href="@Url.Action("Index", "Test", new { page = (Model.Page + 1) })">Câu tiếp</a></li>*@
-                <li class="page-item @isFirst"><a data-page="@(Model.Page - 1)" class="page-link @isFirst qprev" href="#">Trở về</a></li>
-                <li class="page-item @isEnd"><a data-page="@(Model.Page + 1)" class="page-link @isEnd qnext" href="#">Câu tiếp</a></li>
+                <li class="page-item @isFirst li-prev"><a data-page="@(Model.Page - 1)" class="page-link @isFirst qprev" href="#">Trở về</a></li>
+                <li class="page-item @isEnd li-next"><a data-page="@(Model.Page + 1)" class="page-link @isEnd qnext" href="#">Câu tiếp</a></li>
             </ul>
         </div>
 
         <div class="col-md-6">
             <ul class="pagination pull-right">
-                <li class="page-item"><a class="page-link" href="#">Nộp bài</a></li>
+                <li class="page-item"><a class="page-link" id="complete" data-page="0" href="#">Nộp bài</a></li>
             </ul>
         </div>
     </div>

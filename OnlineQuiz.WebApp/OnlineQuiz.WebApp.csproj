@@ -223,6 +223,7 @@
     <Compile Include="Controllers\ExamineeController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LoginController.cs" />
+    <Compile Include="Controllers\RegistrationController.cs" />
     <Compile Include="Controllers\TestController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -572,10 +573,13 @@
     <Content Include="Views\Examinee\Detail.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\_Index.cshtml" />
+    <Content Include="Views\Test\_ExamResult.cshtml" />
+    <Content Include="Views\Login\Register.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Views\Base\" />
+    <Folder Include="Views\Registration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Client\fonts\glyphicons-halflings-regular.woff2" />

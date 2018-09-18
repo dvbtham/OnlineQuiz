@@ -11,5 +11,9 @@ namespace OnlineQuiz.Common.ViewModel
         public Guid ExaminationID { get; set; }
 
         public int ExamCode { get; set; }
+
+        public int Duration { get; set; }
+
+        public bool IsCompleted { get; set; }
     }
 }

@@ -1,26 +1,28 @@
-﻿function startTimer(duration, display) {
-    var timer = duration, minutes, seconds;
-    setInterval(function () {
+﻿(function () {
+    var duration = parseInt($("#duration").text().substring(0, 2));
+    var timer = duration * 60, minutes, seconds;
+    var interval = setInterval(function () {
+
         minutes = parseInt(timer / 60, 10);
         seconds = parseInt(timer % 60, 10);
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-
-        display.text(minutes + ":" + seconds);
+        
+        $("#duration").text(minutes + ":" + seconds);
 
         if (--timer < 0) {
-            timer = duration;
+            console.log(duration);
+            clearInterval(interval);
+            $("input[type='radio']").attr("disabled", true);
+            $(".li-prev").addClass("disabled");
+            $(".li-next").addClass("disabled");
+            $(".qprev").addClass("disabled");
+            $(".qnext").addClass("disabled");
         }
     }, 1000);
-}
+    $(".album").removeClass("mt-20");
 
-(function () {
-    var dur = 60 * 20,
-        display = $('.time');
-    startTimer(dur, display);
-    $(".album").removeClass("py-5");
-    
     //$("#content").on('change', '.question-item input', function () {
     //    var data = $(this).val();
     //    var qid = data.substr(2, data.length);
@@ -52,20 +54,33 @@
         return false;
     });
 
+    $("#content").on('click', '#complete', function (e) {
+        e.preventDefault();
+        if (!confirm("Bạn sẽ không được làm lại bài thi này, bạn có muốn tiếp tục?")) return;
+        save(e);
+        clearInterval(interval);
+        return false;
+    });
+
     function save(e) {
         var link = $(e.target);
         const page = link.data("page");
         const checkedOptions = $("input[type='radio']:checked");
         var questions = [];
-        $.each(checkedOptions, function (i,e) {
+        $.each(checkedOptions, function (i, e) {
             questions.push($(e).val());
         });
-       
+        duration = parseInt($("#duration").text().substring(0, 2));
         const data = {
+            ExamResultID: $("#ExamResultID").val(),
             IDExaminee: $("#idExaminee span").text(),
             Page: page,
-            Content: JSON.stringify(questions)
+            Content: JSON.stringify(questions),
+            RemainingTime: duration < 0 ? 0 : duration
+
         };
+
+        console.log(data);
 
         $.ajax({
             url: "/Test/Save",
@@ -74,7 +89,9 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (res) {
-                $("#content").html(res.data);
+                //if (res.isRenderHtml)
+                    $("#content").html(res.data);
+               
             },
             error: function () {
                 alert("Đã xảy ra lỗi. Vui lòng kiểm tra lại!");

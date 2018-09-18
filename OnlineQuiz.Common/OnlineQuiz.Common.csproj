@@ -38,6 +38,7 @@
     </Reference>
     <Reference Include="PresentationCore" />
     <Reference Include="System" />
+    <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.configuration" />
     <Reference Include="System.Core" />
     <Reference Include="System.Drawing" />
@@ -83,9 +84,12 @@
     <Compile Include="ViewModel\ExaminationQuestionViewModel.cs" />
     <Compile Include="ViewModel\ExamineeViewModel.cs" />
     <Compile Include="ViewModel\ExamInfoViewModel.cs" />
+    <Compile Include="ViewModel\ExamPeriodViewModel.cs" />
     <Compile Include="ViewModel\ExamResultViewModel.cs" />
+    <Compile Include="ViewModel\InsertRegistrationViewModel.cs" />
     <Compile Include="ViewModel\KeyValuePair.cs" />
     <Compile Include="ViewModel\LoginResult.cs" />
+    <Compile Include="ViewModel\RegisterViewModel.cs" />
     <Compile Include="ViewModel\ResponseBase.cs" />
     <Compile Include="ViewModel\RequestEditViewModel.cs" />
     <Compile Include="ViewModel\ExaminationViewModel.cs" />
