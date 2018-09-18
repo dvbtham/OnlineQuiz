@@ -90,6 +90,7 @@
     <Compile Include="ViewModel\KeyValuePair.cs" />
     <Compile Include="ViewModel\LoginResult.cs" />
     <Compile Include="ViewModel\RegisterViewModel.cs" />
+    <Compile Include="ViewModel\RegistrationResultViewModel.cs" />
     <Compile Include="ViewModel\ResponseBase.cs" />
     <Compile Include="ViewModel\RequestEditViewModel.cs" />
     <Compile Include="ViewModel\ExaminationViewModel.cs" />

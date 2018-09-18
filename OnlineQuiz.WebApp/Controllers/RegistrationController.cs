@@ -2,6 +2,9 @@
 using OnlineQuiz.Model.Infrastructure;
 using OnlineQuiz.Model.Repositories;
 using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.IO;
 using System.Web.Mvc;
 
 namespace OnlineQuiz.WebApp.Controllers
@@ -117,6 +120,37 @@ namespace OnlineQuiz.WebApp.Controllers
             {
                 data = examinee
             });
+        }
+
+        [HttpPost]
+        public ActionResult PopulateRegistrationResult(string idCard, string examPeriodId, string techName)
+        {
+            var mdata = registrationRepository.GetBasicResult(idCard, examPeriodId);
+            var mtechSkill = "cơ bản";
+            if (techName.Contains("nâng cao"))
+            {
+                mtechSkill = "nâng cao";
+                mdata = registrationRepository.GetAdvanceResult(idCard, examPeriodId);
+            }
+            
+            return Json(new
+            {
+                techSkill = mtechSkill,
+                data = mdata,
+                view = ConvertViewToString("_Result", mdata)
+            });
+        }
+
+        private string ConvertViewToString(string viewName, object model)
+        {
+            ViewData.Model = model;
+            using (StringWriter writer = new StringWriter())
+            {
+                ViewEngineResult vResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
+                ViewContext vContext = new ViewContext(ControllerContext, vResult.View, ViewData, new TempDataDictionary(), writer);
+                vResult.View.Render(vContext, writer);
+                return writer.ToString();
+            }
         }
     }
 }

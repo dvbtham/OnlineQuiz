@@ -2,6 +2,7 @@
 using OnlineQuiz.Model.Entity;
 using OnlineQuiz.Model.Infrastructure;
 using System;
+using System.Collections.Generic;
 using System.Data.SqlClient;
 using System.Linq;
 
@@ -11,6 +12,9 @@ namespace OnlineQuiz.Model.Repositories
     {
         void InsertAdvancedModuleRegistration(InsertRegistrationViewModel vm);
         void InsertBasicRegistration(InsertRegistrationViewModel vm);
+
+        IEnumerable<RegistrationResultViewModel> GetBasicResult(string idCard, string examPeriodId);
+        IEnumerable<RegistrationResultViewModel> GetAdvanceResult(string idCard, string examPeriodId);
     }
 
     public class RegistrationRepository : RepositoryBase<Registration>, IRegistrationRepository
@@ -102,6 +106,44 @@ namespace OnlineQuiz.Model.Repositories
             catch (Exception e)
             {
                 throw e;
+            }
+        }
+
+        public IEnumerable<RegistrationResultViewModel> GetBasicResult(string idCard, string examPeriodId)
+        {
+            try
+            {
+                var pars = new SqlParameter[]
+                {
+                    new SqlParameter("@IdentityCard", idCard),
+                    new SqlParameter("@ExamPeriodId", examPeriodId)
+                };
+                return DbContext.Database
+                    .SqlQuery<RegistrationResultViewModel>("spGetRegistrationByIdentityCardExamPeriodId @IdentityCard, @ExamPeriodId", pars).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
+        public IEnumerable<RegistrationResultViewModel> GetAdvanceResult(string idCard, string examPeriodId)
+        {
+            try
+            {
+                var pars = new SqlParameter[]
+               {
+                    new SqlParameter("@IdentityCard", idCard),
+                    new SqlParameter("@ExamPeriodId", examPeriodId)
+               };
+                return DbContext.Database
+                    .SqlQuery<RegistrationResultViewModel>("spGetAdvancedModuleRegistrationByIdentityCardExamPeriodId @IdentityCard, @ExamPeriodId", pars).ToList();
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

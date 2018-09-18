@@ -575,11 +575,11 @@
     <Content Include="Views\Test\_Index.cshtml" />
     <Content Include="Views\Test\_ExamResult.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
+    <Content Include="Views\Registration\_Result.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />
     <Folder Include="Views\Base\" />
-    <Folder Include="Views\Registration\" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Content\Client\fonts\glyphicons-halflings-regular.woff2" />
