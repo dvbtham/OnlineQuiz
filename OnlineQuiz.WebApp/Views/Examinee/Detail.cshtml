@@ -9,94 +9,104 @@
     <div class="alert alert-danger">Tạm thời bạn chưa có lịch thi!</div>
     return;
 }
+    <div class="row">
+        <div class="col-md-12 col-sm-12">
+            <nav aria-label="breadcrumb">
+                <ol class="breadcrumb">
+                    <li class="breadcrumb-item"><a href="#">Home</a></li>
+                    <li class="breadcrumb-item"><a href="#">Library</a></li>
+                    <li class="breadcrumb-item active" aria-current="page">Data</li>
+                </ol>
+            </nav>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+            <div class="card mb-4 box-shadow cus">
+                <div class="card-header"><h5>Thông tin thí sinh</h5></div>
+                <div class="alert alert-success hidden" id="alert"></div>
+                <div class="card-body form-group-mb-0">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">ID thí sinh</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label" id="examineeID">@Model.IDExaminee</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Họ và tên</label>
+                        <div class="col-sm-8" id="fullname">
+                            <label class="col-form-label">@(Model.LastName + " " + Model.FirstName)</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày sinh</label>
+                        <div class="col-sm-8" id="dateOB">
+                            <label class="col-form-label">@Model.DateOfBirth.ToShortDateString()</label>
+                        </div>
+                    </div>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Giới tính</label>
+                        <div class="col-sm-8" id="gender">
+                            <label class="col-form-label">@(Model.Gender ? "Nam" : "Nữ")</label>
 
-<div class="row">
-    <div class="col-md-6">
-        <div class="card mb-4 box-shadow cus">
-            <div class="card-header"><h5>Thông tin thí sinh</h5></div>
-            <div class="alert alert-success hidden" id="alert"></div>
-            <div class="card-body form-group-mb-0">
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">ID thí sinh</label>
-                    <div class="col-sm-8">
-                        <label class="col-form-label" id="examineeID">@Model.IDExaminee</label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Họ và tên</label>
-                    <div class="col-sm-8" id="fullname">
-                        <label class="col-form-label">@(Model.LastName + " " + Model.FirstName)</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Ngày sinh</label>
-                    <div class="col-sm-8" id="dateOB">
-                        <label class="col-form-label">@Model.DateOfBirth.ToShortDateString()</label>
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Giới tính</label>
-                    <div class="col-sm-8" id="gender">
-                        <label class="col-form-label">@(Model.Gender ? "Nam" : "Nữ")</label>
-
-                    </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">CMND</label>
-                    <div class="col-sm-8" id="cmnd">
-                        <label class="col-form-label">@Model.IdentityCard</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">CMND</label>
+                        <div class="col-sm-8" id="cmnd">
+                            <label class="col-form-label">@Model.IdentityCard</label>
+                        </div>
                     </div>
                 </div>
             </div>
+            <textarea class="form-control hidden" id="editRequest"></textarea>
+            <a href="#" id="cancel" class="btn btn-danger pull-right ml-5 mb-10 mt-10 btn-sm hidden">Hủy</a>
+            <a href="#" id="editInfo" class="btn btn-info pull-right mr-10 mb-10 btn-sm">Yêu cầu sửa</a>
         </div>
-        <textarea class="form-control hidden" id="editRequest"></textarea>
-        <a href="#" id="cancel" class="btn btn-danger pull-right ml-5 mb-10 mt-10 btn-sm hidden">Hủy</a>
-        <a href="#" id="editInfo" class="btn btn-info pull-right mr-10 mb-10 btn-sm">Yêu cầu sửa</a>
-    </div>
-    <div class="col-md-6">
-        <div class="card mb-4 box-shadow cus">
-            <div class="card-header"><h5>Thông tin hội đồng thi</h5></div>
-            <div class="card-body form-group-mb-0">
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Hội đồng thi</label>
-                    <div class="col-sm-8">
-                        <label class="col-form-label"><b>Trường Đại Học Đông Á</b></label>
+        <div class="col-md-6">
+            <div class="card mb-4 box-shadow cus">
+                <div class="card-header"><h5>Thông tin hội đồng thi</h5></div>
+                <div class="card-body form-group-mb-0">
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Hội đồng thi</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label"><b>Trường Đại Học Đông Á</b></label>
+                        </div>
                     </div>
-                </div>
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Tên tín chỉ</label>
-                    <div class="col-sm-8">
-                        <label class="col-form-label">@Model.InformationTechnologySkillName</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Tên tín chỉ</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label">@Model.InformationTechnologySkillName</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Ngày thi</label>
-                    <div class="col-sm-8">
-                        <label class="col-form-label">@Model.ExaminationDate.ToString("dd/MM/yyyy")</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Ngày thi</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label">@Model.ExaminationDate.ToString("dd/MM/yyyy")</label>
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row">
-                    <label class="col-sm-3 col-form-label">Xuất thi </label>
-                    <div class="col-sm-8">
-                        <label class="col-form-label">@Model.Remark</label>
+                    <div class="form-group row">
+                        <label class="col-sm-3 col-form-label">Xuất thi </label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label">@Model.Remark</label>
 
+                        </div>
                     </div>
-                </div>
 
-                <div class="form-group row" id="module">
-                    <label class="col-sm-3 col-form-label">Tên module</label>
-                    <div class="col-sm-8">
-                        <label class="col-form-label">@Model.QuestionModuleName</label>
+                    <div class="form-group row" id="module">
+                        <label class="col-sm-3 col-form-label">Tên module</label>
+                        <div class="col-sm-8">
+                            <label class="col-form-label">@Model.QuestionModuleName</label>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <a href="@Url.Action("Index", "Test", new { id = Model.IDExaminee })" class="btn btn-primary btn-sm">Vào Thi </a>
+            <a href="@Url.Action("Index", "Test", new { id = Model.IDExaminee })" class="btn btn-primary btn-sm">Vào Thi </a>
+        </div>
     </div>
-</div>
 
 @section scripts{
     <script src="~/Content/Client/js/afterLogin.js"></script>

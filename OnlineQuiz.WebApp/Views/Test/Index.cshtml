@@ -2,6 +2,7 @@
 @{
     ViewBag.Title = Model.Examinee.InformationTechnologySkillName;
     Layout = "~/Views/Shared/_Layout.cshtml";
+    int qIndex = 1;
 }
 <input type="hidden" id="ExamResultID" value="@Model.ExamResult.ID" />
 
@@ -23,9 +24,22 @@
         <div class="card-body">
             <div class="row">
                 <div class="col-md-2 mb-10">
-                    <p>Thời gian làm bài</p>
-                    <p class="time box-shadow " id="@(Model.ExamResult.Status ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0"+ Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </p>
-                    
+                    <div class="sticky-sidebar">
+                        <p>Thời gian làm bài</p>
+                        <p class="time box-shadow " id="@(Model.ExamResult.Status ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0" + Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </p>
+
+                        <div class="question-nav">
+                            <p class="mt-15 mb-10">Điều hướng bài kiểm tra</p>
+                            <hr style="margin-top: 5px;">
+                            <ul>
+                                @foreach (var item in Model.ExaminationQuestions)
+                                {
+                                    <li><a href="#q_@item.QuestionID">@qIndex</a></li>
+                                    { qIndex++; }
+                                }
+                            </ul>
+                        </div>
+                    </div>
                 </div>
 
                 <div class="col-md-10">

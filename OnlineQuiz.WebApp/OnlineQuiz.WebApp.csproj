@@ -503,6 +503,7 @@
     <Content Include="Views\ExamSchedule\Index.cshtml" />
     <Content Include="Views\ExaminationQuestion\Basic.cshtml" />
     <Content Include="Views\ExaminationQuestion\Advance.cshtml" />
+    <Content Include="Views\Shared\_LeftNav.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />

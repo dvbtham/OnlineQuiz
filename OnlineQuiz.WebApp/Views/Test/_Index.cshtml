@@ -13,7 +13,7 @@
 @foreach (var item in Model.ExaminationQuestions)
 {
 
-    <div class="question-item" data-id="@item.QuestionID">
+    <div class="question-item" data-id="@item.QuestionID" id="q_@item.QuestionID">
         <p><b>Câu @b: @item.QuestionContent</b></p>
         <ul>
             <li>
