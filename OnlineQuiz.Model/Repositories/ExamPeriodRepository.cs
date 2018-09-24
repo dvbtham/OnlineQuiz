@@ -6,9 +6,8 @@ using System.Linq;
 
 namespace OnlineQuiz.Model.Repositories
 {
-    public interface IExamPeriodRepository
+    public interface IExamPeriodRepository : IGetKeyValueList
     {
-        IEnumerable<KeyValuePair> GetKeyValueList();
         ExamPeriodViewModel GetById(string id);
 
     }

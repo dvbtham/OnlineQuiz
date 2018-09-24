@@ -12,7 +12,7 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public ExamScheduleAdvanced()
         {
-            ExamineeExamScheduleAdvanceds = new HashSet<ExamineeExamScheduleAdvanced>();
+            Examinees = new HashSet<Examinee>();
         }
 
         public Guid ID { get; set; }
@@ -32,11 +32,11 @@ namespace OnlineQuiz.Model.Entity
 
         public virtual ExaminationRoom ExaminationRoom { get; set; }
 
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExamineeExamScheduleAdvanced> ExamineeExamScheduleAdvanceds { get; set; }
-
         public virtual ExamPeriod ExamPeriod { get; set; }
 
         public virtual StartEndTime StartEndTime { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<Examinee> Examinees { get; set; }
     }
 }

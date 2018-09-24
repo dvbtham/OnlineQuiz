@@ -1,0 +1,152 @@
+﻿@model OnlineQuiz.Common.ViewModel.ExamScheduleViewModel
+@{
+    ViewBag.Title = "Quản lý lịch thi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <h3 class="page-header">@ViewBag.Title</h3>
+    <div class="col-md-6">
+        @using (Html.BeginForm("SaveExaminee", "ExamSchedule", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.HiddenFor(x => x.SaveExamSchedule.ID)
+            <div class="alert alert-success hidden" id="alert"></div>
+            <div class="card-body form-group-mb-0">
+                <div class="form-group row">
+                    <label class="control-label col-sm-3">Đợt thi</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => x.SaveExamSchedule.ExamPeriodID, ViewBag.ExamPeriods as SelectList, new { @class = "form-control form-control-sm", id = "examPeriod" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-3">Ngày thi</label>
+                    <div class="col-sm-8">
+                        @Html.EditorFor(x => x.SaveExamSchedule.ExaminationDate, null, new { htmlAttributes = new { type = "date", id = "examDate", @class = "form-control form-control-sm" } })
+                        @Html.ValidationMessageFor(x => x.SaveExamSchedule.ExaminationDate, "", new { @class = "text-danger mt-5" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-3">Xuất thi</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => x.SaveExamSchedule.StartEndTimeID, ViewBag.StartEndTimes as SelectList, new { @class = "form-control form-control-sm", id = "statEndTime" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-3">Chứng chỉ</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownList("TechSkillId", ViewBag.TechSkills as SelectList, new { @class = "form-control form-control-sm", id = "techSkills" })
+                    </div>
+                </div>
+                <div class="form-group row">
+                    <label class="control-label col-sm-3">Tên module</label>
+                    <div class="col-sm-8">
+                        @Html.DropDownListFor(x => x.SaveExamSchedule.AdvancedModuleRegistrationID, ViewBag.TechSkills as SelectList, new { @class = "form-control form-control-sm", id = "modules" })
+                    </div>
+                </div>
+            </div>
+        }
+
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("SaveExaminee", "Registration", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.HiddenFor(x => x.SaveExamSchedule.ID)
+            <div class="alert alert-success hidden" id="alert"></div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Thời gian thi</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label" id="examDateLabel">00:00 - 00:00</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Phòng thi</label>
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(x => x.SaveExamSchedule.StartEndTimeID, ViewBag.Rooms as SelectList, new { @class = "form-control form-control-sm", id = "room" })
+
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Số lượng máy</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label" id="computerCount">0</label>
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Số máy dự trữ</label>
+                <div class="col-sm-8">
+                    @Html.EditorFor(x => x.SaveExamSchedule.ExaminationDate, null, new { htmlAttributes = new { type = "number", @class = "form-control form-control-sm", id = "smdt" } })
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Danh sách lớp</label>
+                <div class="col-sm-8">
+                    <div class="input-group">
+                        <select class="form-control form-control-sm" id="classList"></select>
+                        <span class="input-group-addon pointer" id="createClass">Tạo lớp thi</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-group row mt-10">
+                <label class="control-label col-sm-3"></label>
+                <div class="col-sm-4">
+                    <button type="button" id="saveSchedule" class="btn btn-primary btn-sm btn-block">Tạo lịch thi</button>
+
+                </div>
+                <div class="col-sm-4">
+                    <button type="button" id="getSchedule" class="btn btn-primary btn-sm btn-block">Xem lịch thi</button>
+
+                </div>
+            </div>
+        }
+
+    </div>
+</div>
+
+<div class="row" id="regisResult">
+    <div class="col-md-12">
+        <div class="card mb-4 box-shadow">
+            <div class="col-md-12 mt-10">
+                <p><strong>Danh sách lịch thi</strong></p>
+                <div class="table-responsive" id="tableResult">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>Họ tên</th>
+                                <th>ID dự thi</th>
+                                <th>Ngày thi</th>
+                                <th>Xuất thi</th>
+                                <th>Phòng thi</th>
+                                <th>Tên chứng chỉ</th>
+                                <th>Tên module</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+
+                            <tr>
+                                <td>1</td>
+                                <td>Thâm Davies</td>
+                                <td>CB000181921</td>
+                                <td>23/09/2018</td>
+                                <td>Xuất 1</td>
+                                <td>ROOM 1</td>
+
+                                <td>Chuẩn nâng cao</td>
+                                <td>Abc</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section scripts{
+    <script src="~/Content/Client/js/examSchedule.js"></script>
+}

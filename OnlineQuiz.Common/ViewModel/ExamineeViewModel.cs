@@ -33,13 +33,16 @@ namespace OnlineQuiz.Common.ViewModel
         [Required(ErrorMessage = "Bạn chưa nhập {0}!")]
         [Display(Name = "Số chứng minh thư")]
         [StringLength(15, ErrorMessage = "{0} chỉ được nhập tối đa {1} ký tự.")]
+        [MinLength(8, ErrorMessage = "{0} phải nhập tối thiểu {1} ký tự.")]
         public string IdentityCard { get; set; }
 
-        [Required(ErrorMessage = "Bạn chưa nhập {0}!")]
         [Display(Name = "Email")]
+        [EmailAddress(ErrorMessage = "Vui lòng nhập đúng định dạng email.")]
         public string Email { get; set; }
 
         [Display(Name = "Điện thoại")]
+        [StringLength(11, ErrorMessage = "{0} chỉ được nhập tối đa {1} ký tự.")]
+        [MinLength(8, ErrorMessage = "{0} phải nhập tối thiểu {1} ký tự.")]
         public string Mobile { get; set; }
     }
 }

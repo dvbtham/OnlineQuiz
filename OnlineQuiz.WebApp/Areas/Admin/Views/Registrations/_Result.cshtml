@@ -1,0 +1,59 @@
+﻿@model IEnumerable<OnlineQuiz.Common.ViewModel.RegistrationResultViewModel>
+@if (Model.Count() > 0)
+{
+    int i = 1;
+    <div class="col-md-12">
+        <div class="card mb-4 box-shadow">
+            <div class="col-md-12 mt-10">
+                <p><strong>Kết quả đăng ký dự thi</strong></p>
+                <div class="table-responsive" id="tableResult">
+                    <table class="table table-bordered">
+                        <thead>
+                            <tr>
+                                <th>STT</th>
+                                <th>CMND</th>
+                                <th>ID dự thi</th>
+                                <th>Tên chứng chỉ</th>
+                                @if (!string.IsNullOrEmpty(Model.First().QuestionModuleName))
+                                {
+                                    <th>Tên module dự thi</th>
+                                }
+                                <th>Đợt thi</th>
+                                <th>Thời gian dự kiến</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+                                <tr>
+                                    <td>@i</td>
+                                    <td>@item.IdentityCard</td>
+                                    <td>@item.IDExaminee</td>
+                                    <td>@item.InformationTechnologySkillName</td>
+                                    @if (!string.IsNullOrEmpty(item.QuestionModuleName))
+                                    {
+                                        <td>@item.QuestionModuleName</td>
+                                    }
+                                    <td>@item.ExamPeriodName</td>
+                                    <td>@item.TestDate</td>
+                                </tr>
+                                i++;
+                            }
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+}
+else
+{
+    <div class="col-md-12">
+        <div class="card mb-4 box-shadow">
+            <div class="col-md-12 mt-10">
+               <div class="alert flat alert-danger">Bạn chưa đăng ký dự thi</div>
+            </div>
+        </div>
+    </div>
+}

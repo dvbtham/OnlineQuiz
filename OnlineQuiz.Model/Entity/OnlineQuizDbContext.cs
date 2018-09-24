@@ -1,9 +1,6 @@
 namespace OnlineQuiz.Model.Entity
 {
-    using System;
     using System.Data.Entity;
-    using System.ComponentModel.DataAnnotations.Schema;
-    using System.Linq;
 
     public partial class OnlineQuizDbContext : DbContext
     {
@@ -18,8 +15,6 @@ namespace OnlineQuiz.Model.Entity
         public virtual DbSet<ExaminationQuestion> ExaminationQuestions { get; set; }
         public virtual DbSet<ExaminationRoom> ExaminationRooms { get; set; }
         public virtual DbSet<Examinee> Examinees { get; set; }
-        public virtual DbSet<ExamineeExamScheduleAdvanced> ExamineeExamScheduleAdvanceds { get; set; }
-        public virtual DbSet<ExamineeExamScheduleBasic> ExamineeExamScheduleBasics { get; set; }
         public virtual DbSet<ExamineeInformationTechnologySkill> ExamineeInformationTechnologySkills { get; set; }
         public virtual DbSet<ExamPeriod> ExamPeriods { get; set; }
         public virtual DbSet<ExamResult> ExamResults { get; set; }
@@ -88,11 +83,6 @@ namespace OnlineQuiz.Model.Entity
                 .IsUnicode(false);
 
             modelBuilder.Entity<Examinee>()
-                .HasMany(e => e.ExamineeExamScheduleBasics)
-                .WithOptional(e => e.Examinee)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<Examinee>()
                 .HasMany(e => e.Registrations)
                 .WithOptional(e => e.Examinee)
                 .WillCascadeOnDelete();
@@ -101,6 +91,16 @@ namespace OnlineQuiz.Model.Entity
                 .HasMany(e => e.Students)
                 .WithOptional(e => e.Examinee)
                 .WillCascadeOnDelete();
+
+            modelBuilder.Entity<Examinee>()
+                .HasMany(e => e.ExamScheduleAdvanceds)
+                .WithMany(e => e.Examinees)
+                .Map(m => m.ToTable("ExamineeExamScheduleAdvanced").MapLeftKey("ExamineeID").MapRightKey("ExamScheduleAdvancedID"));
+
+            modelBuilder.Entity<Examinee>()
+                .HasMany(e => e.ExamScheduleBasics)
+                .WithMany(e => e.Examinees)
+                .Map(m => m.ToTable("ExamineeExamScheduleBasic").MapLeftKey("ExamineeID").MapRightKey("ExamScheduleBasicID"));
 
             modelBuilder.Entity<ExamPeriod>()
                 .HasMany(e => e.ExamScheduleBasics)
@@ -119,16 +119,6 @@ namespace OnlineQuiz.Model.Entity
             modelBuilder.Entity<ExamResultDetail>()
                 .Property(e => e.Answer)
                 .IsUnicode(false);
-
-            modelBuilder.Entity<ExamScheduleAdvanced>()
-                .HasMany(e => e.ExamineeExamScheduleAdvanceds)
-                .WithOptional(e => e.ExamScheduleAdvanced)
-                .WillCascadeOnDelete();
-
-            modelBuilder.Entity<ExamScheduleBasic>()
-                .HasMany(e => e.ExamineeExamScheduleBasics)
-                .WithOptional(e => e.ExamScheduleBasic)
-                .WillCascadeOnDelete();
 
             modelBuilder.Entity<Faculty>()
                 .HasMany(e => e.MajorClasses)
@@ -194,7 +184,6 @@ namespace OnlineQuiz.Model.Entity
             modelBuilder.Entity<Question>()
                 .HasMany(e => e.ExamResultDetails)
                 .WithRequired(e => e.Question)
-                .HasForeignKey(e => e.QuestionID)
                 .WillCascadeOnDelete(false);
 
             modelBuilder.Entity<QuestionClassification>()

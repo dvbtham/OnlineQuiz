@@ -82,10 +82,12 @@
     <Compile Include="ViewModel\AttendanceViewModel.cs" />
     <Compile Include="ViewModel\ExaminateInfoViewModel.cs" />
     <Compile Include="ViewModel\ExaminationQuestionViewModel.cs" />
+    <Compile Include="ViewModel\ExaminationRoomViewModel.cs" />
     <Compile Include="ViewModel\ExamineeViewModel.cs" />
     <Compile Include="ViewModel\ExamInfoViewModel.cs" />
     <Compile Include="ViewModel\ExamPeriodViewModel.cs" />
     <Compile Include="ViewModel\ExamResultViewModel.cs" />
+    <Compile Include="ViewModel\ExamScheduleViewModel.cs" />
     <Compile Include="ViewModel\InsertRegistrationViewModel.cs" />
     <Compile Include="ViewModel\KeyValuePair.cs" />
     <Compile Include="ViewModel\LoginResult.cs" />
@@ -94,7 +96,10 @@
     <Compile Include="ViewModel\ResponseBase.cs" />
     <Compile Include="ViewModel\RequestEditViewModel.cs" />
     <Compile Include="ViewModel\ExaminationViewModel.cs" />
+    <Compile Include="ViewModel\SaveExamScheduleViewModel.cs" />
     <Compile Include="ViewModel\SaveExamViewModel.cs" />
+    <Compile Include="ViewModel\SaveScheduleViewModel.cs" />
+    <Compile Include="ViewModel\ViewExamScheduleViewModel.cs" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

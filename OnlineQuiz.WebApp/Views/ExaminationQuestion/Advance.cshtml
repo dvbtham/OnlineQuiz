@@ -1,0 +1,93 @@
+﻿
+@{
+    ViewBag.Title = "Tạo đề thi nâng cao";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col-md-6">
+        <div class="alert alert-success hidden" id="alert"></div>
+        <div class="card-body form-group-mb-0">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Tên đợt thi</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Thời gian thi</label>
+                <div class="col-sm-8" id="examDate">
+                    <input type="text" class="form-control form-control-sm" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Module nâng cao</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="alert alert-success hidden" id="alert"></div>
+        <div class="card-body form-group-mb-0">
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Thời gian đợt</label>
+                <div class="col-sm-8">
+                    <input type="text" class="form-control form-control-sm" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Số đề cần tạo</label>
+                <div class="col-sm-8" id="examDate">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="col-sm-3 col-form-label">Số câu hỏi</label>
+                <div class="col-sm-8">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-12">
+        <div class="card-body form-group-mb-0">
+            <div class="form-group row">
+                <label class="col-md-3 col-form-label">Sử dụng bảng tính nâng cao</label>
+                <div class="col-sm-1" id="examDate">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+                <label class="col-form-label">Xuất sắc</label>
+                <div class="col-sm-1" id="examDate">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+                <label class="col-form-label">Giỏi</label>
+                <div class="col-sm-1" id="examDate">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+                <label class="col-form-label">Khá</label>
+                <div class="col-sm-1" id="examDate">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+                <label class="col-form-label">Trung bình</label>
+                <div class="col-sm-1" id="examDate">
+                    <input type="number" class="form-control form-control-sm" />
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="card-body form-group-mb-0">
+            <div class="form-group row mt-10">
+                <label class="col-sm-3 col-form-label">
+
+                </label>
+                <div class="col-sm-8" id="examDate">
+                    <button type="submit" id="saveExaminee" class="btn btn-primary btn-sm btn-block">Tạo đề thi</button>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

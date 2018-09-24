@@ -1,0 +1,152 @@
+﻿@model OnlineQuiz.Common.ViewModel.RegisterViewModel
+@{
+    ViewBag.Title = "Đăng ký dự thi";
+    Layout = "~/Areas/Admin/Views/Shared/_Layout.cshtml";
+    ViewBag.SaveExamineeText = Model.Examinee.ID != Guid.Empty ? "Cập nhật thông tin" : "Đăng ký";
+}
+
+
+<div class="row">
+    @if (!string.IsNullOrEmpty((string)TempData["SaveMsg"]))
+    {
+        <div class="col-md-12">
+            <div class="alert alert-danger">@((string)TempData["SaveMsg"])</div>
+        </div>
+    }
+    <div class="col-md-6">
+        <h3 class="page-header">Khai báo thông tin thí sinh</h3>
+        @using (Html.BeginForm("SaveExaminee", "Registrations", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken();
+            @Html.HiddenFor(x => x.Examinee.ID)
+            <div class="alert alert-success flat hidden" id="alert"></div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">CMND</label>
+                <div class="col-sm-8">
+                    @Html.TextBoxFor(x => x.Examinee.IdentityCard, new { data_idc = Model.Examinee.IdentityCard, @class = "form-control form-control-sm", type = "number", id = "IdentityCard" })
+                    @Html.ValidationMessageFor(x => x.Examinee.IdentityCard, "", new { @class = "text-danger mt-5-block " })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Họ và tên</label>
+                <div class="col-sm-8" id="fullname">
+                    <div class="form-inline">
+                        @Html.TextBoxFor(x => x.Examinee.FirstName, new { id = "fname", placeholder = "Họ lót", @class = "form-control form-control-sm w46per mr-21" })
+                        @Html.TextBoxFor(x => x.Examinee.LastName, new { id = "lname", placeholder = "Tên", @class = "form-control form-control-sm w46per" })
+                    </div>
+                    @Html.ValidationMessageFor(x => x.Examinee.FirstName, "", new { @class = "text-danger mt-5-block " })
+                    @Html.ValidationMessageFor(x => x.Examinee.LastName, "", new { @class = "text-danger mt-5-block " })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Ngày sinh</label>
+                <div class="col-sm-8" id="dateOB">
+                    @Html.EditorFor(x => x.Examinee.DateOfBirth, null, new { htmlAttributes = new { id = "dob", @class = "form-control form-control-sm" } })
+                    @Html.ValidationMessageFor(x => x.Examinee.DateOfBirth, "", new { @class = "text-danger mt-5-block " })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-3">Giới tính</label>
+                <div class="col-sm-8" id="gender">
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(x => x.Examinee.Gender, "true", new { id = "nam" }) Nam
+                    </label>
+                    <label class="radio-inline">
+                        @Html.RadioButtonFor(x => x.Examinee.Gender, "false", new { id = "nu" }) Nữ
+                    </label>
+
+                    @Html.ValidationMessageFor(x => x.Examinee.Gender, "", new { @class = "text-danger mt-5-block " })
+                </div>
+            </div>
+            <div class="form-group">
+                <label class="control-label col-sm-3">Điện thoại</label>
+                <div class="col-sm-8" id="cmnd">
+                    @Html.TextBoxFor(x => x.Examinee.Mobile, new { id = "phone", @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(x => x.Examinee.Mobile, "", new { @class = "text-danger mt-5-block " })
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label class="control-label col-sm-3">Email</label>
+                <div class="col-sm-8" id="email">
+                    @Html.TextBoxFor(x => x.Examinee.Email, new { type="email", id = "exEmail", @class = "form-control form-control-sm" })
+                    @Html.ValidationMessageFor(x => x.Examinee.Email, "", new { @class = "text-danger mt-5-block " })
+                </div>
+            </div>
+            <div class="form-group mt-10">
+                <label class="control-label col-sm-3"></label>
+                <div class="col-sm-8" id="email">
+                    <button type="submit" id="saveExaminee" class="btn btn-primary btn-sm btn-block">@ViewBag.SaveExamineeText</button>
+                </div>
+            </div>
+        }
+    </div>
+    <div class="col-md-6">
+        @using (Html.BeginForm("SaveRegistration", "Registrations", FormMethod.Post, new { @class = "form-horizontal" }))
+        {
+            @Html.AntiForgeryToken()
+            @Html.HiddenFor(x => x.IdentityCard, new { id = "idCard" })
+            <h3 class="page-header">đăng ký dự thi chứng chỉ ứng dụng cntt</h3>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Đợt thi</label>
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(x => x.ExamPeriod.ID, ViewBag.ExamPeriods as SelectList, new { @class = "form-control form-control-sm", id = "examPeriod" })
+                </div>
+            </div>
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Từ ngày</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label" id="fromDate"></label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Đến ngày</label>
+                <div class="col-sm-8">
+                    <label class="col-form-label" id="toDate"></label>
+                </div>
+            </div>
+
+            <div class="form-group row">
+                <label class="control-label col-sm-3">Ngày đăng ký </label>
+                <div class="col-sm-8">
+                    @Html.EditorFor(x => x.RegistrationDate, null, new { htmlAttributes = new { @class = "form-control form-control-sm" } })
+                    @Html.ValidationMessageFor(x => x.RegistrationDate, "", new { @class = "text-danger" })
+                </div>
+            </div>
+
+            <div class="form-group row" id="module">
+                <label class="control-label col-sm-3">Tên chứng chỉ</label>
+                <div class="col-sm-8">
+                    @Html.HiddenFor(x => x.TechSkill.Value, new { id = "TechSkillValue" })
+                    @Html.DropDownListFor(x => x.TechSkill.Key, ViewBag.TechSkills as SelectList, new { @class = "form-control form-control-sm", id = "techSkills" })
+                </div>
+            </div>
+            <div class="form-group row" id="module">
+                <label class="control-label col-sm-3">Tên module</label>
+                <div class="col-sm-8">
+                    @Html.DropDownListFor(x => x.Module.Key, ViewBag.Modules as SelectList, new { @class = "form-control form-control-sm", id = "modules" })
+                </div>
+            </div>
+
+            <div class="form-group row mt-10">
+                <label class="control-label col-sm-3"></label>
+                <div class="col-sm-8">
+                    <button class="btn btn-primary btn-sm" @(string.IsNullOrEmpty(Model.Examinee.IdentityCard) ? "disabled" : "") id="register">Đăng ký dự thi</button>
+                    <button type="button" class="btn btn-primary btn-sm pull-right" id="registration">Xem kết quả</button>
+                </div>
+            </div>
+        }
+    </div>
+
+</div>
+
+<div class="row" id="regisResult">
+    @Html.Partial("/Areas/Admin/Views/Registrations/_Result.cshtml", new List<OnlineQuiz.Common.ViewModel.RegistrationResultViewModel>())
+</div>
+
+@section scripts{
+    <script src="~/Content/Client/js/registration.js"></script>
+}

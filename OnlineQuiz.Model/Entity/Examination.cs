@@ -12,9 +12,9 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Examination()
         {
+            ExamResults = new HashSet<ExamResult>();
             ExaminationModules = new HashSet<ExaminationModule>();
             ExaminationQuestions = new HashSet<ExaminationQuestion>();
-            ExamResults = new HashSet<ExamResult>();
             ExamPeriods = new HashSet<ExamPeriod>();
         }
 
@@ -28,27 +28,19 @@ namespace OnlineQuiz.Model.Entity
 
         public int? TestNumber { get; set; }
 
-        public int? ExellentNumber { get; set; }
-
-        public int? VeryGoodNumber { get; set; }
-
-        public int? GoodNumber { get; set; }
-
-        public int? AverageNumber { get; set; }
-
         [StringLength(255)]
         public string Remark { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamResult> ExamResults { get; set; }
+
+        public virtual InformationTechnologySkill InformationTechnologySkill { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExaminationModule> ExaminationModules { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExaminationQuestion> ExaminationQuestions { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExamResult> ExamResults { get; set; }
-
-        public virtual InformationTechnologySkill InformationTechnologySkill { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamPeriod> ExamPeriods { get; set; }

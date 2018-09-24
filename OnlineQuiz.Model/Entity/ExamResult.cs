@@ -4,6 +4,7 @@ namespace OnlineQuiz.Model.Entity
     using System.Collections.Generic;
     using System.ComponentModel.DataAnnotations;
     using System.ComponentModel.DataAnnotations.Schema;
+    using System.Data.Entity.Spatial;
 
     [Table("ExamResult")]
     public partial class ExamResult
@@ -32,8 +33,6 @@ namespace OnlineQuiz.Model.Entity
         public int? TrueQuestion { get; set; }
 
         public double? Point { get; set; }
-
-        public bool IsCompleted { get; set; }
 
         public bool Status { get; set; }
 

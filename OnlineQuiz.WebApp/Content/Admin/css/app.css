@@ -1,17 +1,71 @@
-﻿@import url("../fonts/RobotoCondensed-Bold.ttf");
+﻿@font-face {
+    font-family: 'Roboto Condensed';
+    src: url('../fonts/RobotoCondensed-Regular.ttf');
+} 
 
-.ml-10{margin-left: 10px !important;}
+body {
+    font-family: 'Roboto Condensed', sans-serif;
+    font-size: 15px;
+}
+
+.pointer {
+    cursor: pointer;
+}
+
+.col-form-label {
+    padding-top: 7px;
+    font-weight: normal;
+}
+
+.form-inline {
+    display: inline-block;
+}
+
+.w50per {
+    width: 50% !important;
+}
+
+.w46per {
+    width: 46% !important;
+}
+
+.ml-10 {
+    margin-left: 10px !important;
+}
+
 .mr-10 {
     margin-right: 10px !important;
 }
-.mt-10{margin-top: 10px !important;}
+
+.mr-25 {
+    margin-right: 25px !important;
+}
+
+.mr-21 {
+    margin-right: 21px !important;
+}
+
+.mt-10 {
+    margin-top: 10px !important;
+}
+
 .mt-5 {
     margin-top: 5px !important;
 }
+
+.mt-5-block {
+    margin-top: 5px !important;
+    display: block;
+}
+
 .mb-5 {
     margin-bottom: 5px !important;
 }
-.ml-5{margin-left: 5px !important;}
+
+.ml-5 {
+    margin-left: 5px !important;
+}
+
 .mb-10 {
     margin-bottom: 10px !important;
 }
@@ -24,20 +78,28 @@
     padding-top: 2px;
     padding-bottom: 2px;
 }
-.panel-heading a {
-    padding: 3px 7px;
+
+    .panel-heading a {
+        padding: 3px 7px;
+    }
+
+.control-label {
+    font-size: 14px;
 }
 
-.page-title {
-    color: #337ab7 !important;
-    text-transform: uppercase;
-    padding-left: 0px;
+
+
+.flat, .alert {
+    border-radius: 0px !important;
 }
 
 h3.page-header {
+    padding-left: 0px;
     margin: 15px 0px;
     font-size: 14px;
     font-weight: bold;
+    color: #337ab7 !important;
+    text-transform: uppercase;
 }
 
 .navbar-brand {
@@ -51,16 +113,16 @@ h3.page-header {
         color: #018f41 !important;
     }
 
-    td>a, td>a>i{
-        text-decoration: none;
-    }
+td > a, td > a > i {
+    text-decoration: none;
+}
 
 .dataTables_length label, .dataTables_filter label {
     font-size: 12px;
 }
 
 textarea.textarea-custom {
-   column-width: 50px;
+    column-width: 50px;
 }
 
 .panel-default {
@@ -73,4 +135,22 @@ textarea.textarea-custom {
 
 tr .form-control {
     font-size: 13px;
+}
+
+
+.bg-green, .btn-primary {
+    background-color: #018F41;
+}
+
+.btn-primary {
+    border-color: #018F41;
+}
+
+    .btn-primary:hover {
+        background-color: #018F41;
+        border-color: #018F41;
+    }
+
+.form-control, .btn {
+    border-radius: 0px;
 }

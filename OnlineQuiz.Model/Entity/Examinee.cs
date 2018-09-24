@@ -12,12 +12,12 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Examinee()
         {
-            ExamineeExamScheduleAdvanceds = new HashSet<ExamineeExamScheduleAdvanced>();
-            ExamineeExamScheduleBasics = new HashSet<ExamineeExamScheduleBasic>();
-            ExamineeInformationTechnologySkills = new HashSet<ExamineeInformationTechnologySkill>();
             ExamResults = new HashSet<ExamResult>();
+            ExamineeInformationTechnologySkills = new HashSet<ExamineeInformationTechnologySkill>();
             Registrations = new HashSet<Registration>();
             Students = new HashSet<Student>();
+            ExamScheduleAdvanceds = new HashSet<ExamScheduleAdvanced>();
+            ExamScheduleBasics = new HashSet<ExamScheduleBasic>();
         }
 
         public Guid ID { get; set; }
@@ -51,21 +51,21 @@ namespace OnlineQuiz.Model.Entity
         public bool? Status { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExamineeExamScheduleAdvanced> ExamineeExamScheduleAdvanceds { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExamineeExamScheduleBasic> ExamineeExamScheduleBasics { get; set; }
+        public virtual ICollection<ExamResult> ExamResults { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamineeInformationTechnologySkill> ExamineeInformationTechnologySkills { get; set; }
-
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ExamResult> ExamResults { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Registration> Registrations { get; set; }
 
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Student> Students { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamScheduleAdvanced> ExamScheduleAdvanceds { get; set; }
+
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ExamScheduleBasic> ExamScheduleBasics { get; set; }
     }
 }

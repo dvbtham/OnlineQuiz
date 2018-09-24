@@ -49,8 +49,8 @@ namespace OnlineQuiz.Model.Entity
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<ExamResultDetail> ExamResultDetails { get; set; }
 
-        public virtual QuestionModule QuestionModule { get; set; }
-
         public virtual QuestionClassification QuestionClassification { get; set; }
+
+        public virtual QuestionModule QuestionModule { get; set; }
     }
 }

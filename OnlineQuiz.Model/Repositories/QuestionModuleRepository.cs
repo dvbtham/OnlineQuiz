@@ -6,10 +6,8 @@ using System.Linq;
 
 namespace OnlineQuiz.Model.Repositories
 {
-    public interface IQuestionModuleRepository
+    public interface IQuestionModuleRepository : IGetKeyValueList
     {
-        IEnumerable<KeyValuePair> GetKeyValueList();
-
         IEnumerable<KeyValuePair> GetKeyValueListByTechId(string techId);
     }
     public class QuestionModuleRepository : RepositoryBase<QuestionModule>, IQuestionModuleRepository

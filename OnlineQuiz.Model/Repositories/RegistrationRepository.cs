@@ -10,8 +10,8 @@ namespace OnlineQuiz.Model.Repositories
 {
     public interface IRegistrationRepository
     {
-        void InsertAdvancedModuleRegistration(InsertRegistrationViewModel vm);
-        void InsertBasicRegistration(InsertRegistrationViewModel vm);
+        ResponseBase InsertAdvancedModuleRegistration(InsertRegistrationViewModel vm);
+        ResponseBase InsertBasicRegistration(InsertRegistrationViewModel vm);
 
         IEnumerable<RegistrationResultViewModel> GetBasicResult(string idCard, string examPeriodId);
         IEnumerable<RegistrationResultViewModel> GetAdvanceResult(string idCard, string examPeriodId);
@@ -24,11 +24,22 @@ namespace OnlineQuiz.Model.Repositories
 
         }
 
-        public void InsertAdvancedModuleRegistration(InsertRegistrationViewModel vm)
+        public ResponseBase InsertAdvancedModuleRegistration(InsertRegistrationViewModel vm)
         {
             try
             {
                 var examinee = DbContext.Examinees.FirstOrDefault(x => x.IdentityCard == vm.IdentityCard);
+
+                var entity = GetSingleByCondition(x => x.ExamineeID.Value == examinee.ID && x.ExamPeriodID.Value == vm.ExamPeriodId && x.InformationTechnologySkillID.Value == vm.InformationTechnologySkillId);
+
+                if (entity != null)
+                {
+                    return new ResponseBase()
+                    {
+                        Status = false,
+                        Message = "Bạn đã đăng ký đợt thi này"
+                    };
+                }
 
                 var registration = new Registration
                 {
@@ -49,11 +60,17 @@ namespace OnlineQuiz.Model.Repositories
                     IDExaminee = exmaineeVm.IDExaminee,
                     QuestionModuleID = vm.QuestionModuleId,
                     RegistrationID = registration.ID
-                    
+
                 };
 
                 DbContext.AdvancedModuleRegistrations.Add(adcnReg);
 
+
+                return new ResponseBase()
+                {
+                    Status = true,
+                    Message = "Đăng ký thành công"
+                };
             }
             catch (Exception e)
             {
@@ -75,11 +92,21 @@ namespace OnlineQuiz.Model.Repositories
                 .SqlQuery<ExamineeViewModel>("spGenerateIDExamineeAdvn @RegistrationId", para).FirstOrDefault();
         }
 
-        public void InsertBasicRegistration(InsertRegistrationViewModel vm)
+        public ResponseBase InsertBasicRegistration(InsertRegistrationViewModel vm)
         {
             try
             {
                 var examinee = DbContext.Examinees.FirstOrDefault(x => x.IdentityCard == vm.IdentityCard);
+
+                var entity = GetSingleByCondition(x => x.ExamineeID.Value == examinee.ID && x.ExamPeriodID.Value == vm.ExamPeriodId && x.InformationTechnologySkillID.Value == vm.InformationTechnologySkillId);
+                if (entity != null)
+                {
+                    return new ResponseBase()
+                    {
+                        Status = false,
+                        Message = "Bạn đã đăng ký đợt thi này"
+                    };
+                }
 
                 var registration = new Registration
                 {
@@ -101,6 +128,12 @@ namespace OnlineQuiz.Model.Repositories
                 };
 
                 DbContext.IDExamineeRegistrations.Add(idreg);
+
+                return new ResponseBase()
+                {
+                    Status = true,
+                    Message = "Đăng ký thành công"
+                };
 
             }
             catch (Exception e)

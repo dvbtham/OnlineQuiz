@@ -6,9 +6,8 @@ using System.Linq;
 
 namespace OnlineQuiz.Model.Repositories
 {
-    public interface ITechSkillRepository
+    public interface ITechSkillRepository : IGetKeyValueList
     {
-        IEnumerable<KeyValuePair> GetKeyValueList();
     }
     public class TechSkillRepository : RepositoryBase<InformationTechnologySkill>, ITechSkillRepository
     {
@@ -18,7 +17,7 @@ namespace OnlineQuiz.Model.Repositories
 
         public IEnumerable<KeyValuePair> GetKeyValueList()
         {
-            return GetAll().Select(x => new KeyValuePair
+            return GetAll().OrderBy(x => x.Name).Select(x => new KeyValuePair
             {
                 Key = x.ID.ToString(),
                 Value = x.Name
