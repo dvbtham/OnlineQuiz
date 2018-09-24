@@ -15,7 +15,29 @@ body {
 }
 
 header.main-header {
-    height: 70px;
+    /*height: 45px;*/
+}
+
+.nav-link {
+    color: #fff !important;
+}
+
+.navbar-brand span {
+    font-family: 'Roboto Condensed Bold';
+    text-transform: uppercase;
+}
+
+a .text-in-circle {
+    display: block;
+    float: left;
+    width: 30px !important;
+    height: 30px;
+    background: #fff;
+    text-align: center;
+    vertical-align: middle;
+    color: #018F41;
+    border-radius: 50%;
+    margin-right: 2px;
 }
 
 .select2-selection {
@@ -247,9 +269,106 @@ span.text-danger.field-validation-error {
                 margin-bottom: -1px;
             }
 
-            .left-logo{
+.left-logo {
+}
 
+.right-logo {
+}
+
+
+/* Collapse card */
+
+[data-toggle="collapse"] .fa-replace:before {
+    content: "\f107";
+}
+
+[data-toggle="collapse"].collapsed .fa-replace:before {
+    content: "\f105";
+}
+
+.card-header {
+    padding: 0px;
+    color: #f98012;
+    margin-bottom: 0;
+    background-color: #fff;
+    border-bottom: 1px solid rgba(0,0,0,.125);
+}
+
+.btn-link {
+    font-weight: 400;
+    width: 100%;
+    text-align: left;
+    color: #f98012;
+    background-color: transparent;
+    text-decoration: none;
+}
+
+    .btn-link:hover {
+        color: #f98012;
+        text-decoration: none;
+        background-color: transparent;
+        border-color: transparent;
+    }
+
+.breadcrumb {
+    line-height: 36px;
+    background-color: #fff;
+    height: 36px;
+    padding: 0px 10px;
+    border-radius: 0;
+}
+
+.breadcrumb-item a {
+    color: #f98012;
+}
+
+.navbar-nav .dropdown-menu {
+    border-radius: 0px;
+}
+
+.dropdown-item {
+    display: block;
+    width: 100%;
+    padding: 1px 10px;
+    clear: both;
+    font-weight: normal;
+    color: #212529;
+    font-size: 16px;
+    text-align: inherit;
+    white-space: nowrap;
+    background-color: transparent;
+    border: 0;
+}
+
+.dropdown-menu-left {
+    left: -122px;
+    right: 0px;
+}
+
+/* Login Form */
+
+.container-fluid {
+    height: auto;
+}
+
+    .container-fluid #login-row #login-column #login-box {
+        margin-top: 20px;
+        width: 320px;
+        max-width: 450px;
+        /* height: 450px; */
+        border: 1px solid #9C9C9C;
+    }
+
+        .container-fluid #login-row #login-column #login-box #login-form {
+            padding: 20px;
+        }
+
+            .container-fluid #login-row #login-column #login-box #login-form .form-group input.btn {
+                background: #018F41;
+                border: 1px solid #018F41;
+                width: 100%;
             }
-            .right-logo{
 
+            .container-fluid #login-row #login-column #login-box #login-form .form-group label.text-default, a {
+                font-size: 14px;
             }

@@ -12,21 +12,63 @@
 </head>
 <body>
     <header class="main-header">
-        <div class="navbar navbar-dark bg-green box-shadow height-100-percent">
+        @*<div class="navbar navbar-dark bg-green box-shadow height-100-percent">
             <div class="container-fluid d-flex justify-content-between">
                 <a href="#" class="navbar-brand d-flex align-items-center">
                     <img src="~/Content/logo.png" />
+                    <span class="text-in-circle">it</span><span>uda</span>
                 </a>
-                <p class="navbar-text-custom">TRUNG TÂM TIN HỌC - TRƯỜNG ĐẠI HỌC ĐÔNG Á</p>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Đăng ký <i class="fa fa-sign-in"></i></a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            Hồ sơ cá nhân
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Đăng xuất</a>
+                        </div>
+                    </li>
+                </ul>
             </div>
-        </div>
+        </div>*@
+        <nav class="navbar navbar-dark navbar-expand-lg bg-green box-shadow height-100-percent">
+            <a class="navbar-brand" href="#">
+                <span class="text-in-circle">it</span><span>uda</span>
+            </a>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse float-right" id="navbarNavDropdown">
+                <ul class="navbar-nav mr-auto"> </ul>
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <a class="nav-link" href="#"><i class="fa fa-sign-out"></i> Đăng ký </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="@Url.Action("Index", "Login")"><i class="fa fa-sign-in"></i> Đăng nhập </a>
+                    </li>
+                    <li class="nav-item dropdown">
+                        <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                            <i class="fa fa-user"></i>  Hồ sơ
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-left" aria-labelledby="navbarDropdownMenuLink">
+                            <a class="dropdown-item" href="#">Thông tin cá nhân</a>
+                            <a class="dropdown-item" href="#">Khóa học</a>
+                            <a class="dropdown-item" href="#">Tin nhắn</a>
+                            <a class="dropdown-item" href="#">Đăng xuất</a>
+                        </div>
+                    </li>
+                </ul>
+            </div>
+        </nav>
     </header>
-
+    
     <main role="main">
         <div class="album mt-20 bg-light">
             <div class="container-fluid">
                 @RenderBody()
-
             </div>
         </div>
 

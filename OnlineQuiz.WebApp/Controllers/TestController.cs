@@ -124,7 +124,7 @@ namespace OnlineQuiz.WebApp.Controllers
         {
             var examResult = examResultRepository.Get(id, 1);
 
-            int pageSize = 225;
+            int pageSize = 5;
             int pageNumber = page ?? 1;
 
             var questionList = examinationRepository.GetExaminationQuestions(examResult).ToList();
