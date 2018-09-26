@@ -99,6 +99,7 @@ namespace OnlineQuiz.Model.Repositories
                 var examinee = DbContext.Examinees.FirstOrDefault(x => x.IdentityCard == vm.IdentityCard);
 
                 var entity = GetSingleByCondition(x => x.ExamineeID.Value == examinee.ID && x.ExamPeriodID.Value == vm.ExamPeriodId && x.InformationTechnologySkillID.Value == vm.InformationTechnologySkillId);
+
                 if (entity != null)
                 {
                     return new ResponseBase()

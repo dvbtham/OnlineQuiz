@@ -357,6 +357,7 @@
     <Content Include="Content\Client\css\bootstrap.css" />
     <Content Include="Content\Client\css\bootstrap.min.css" />
     <Content Include="Content\Client\css\Site.css" />
+    <Content Include="Content\Client\images\truong.jpg" />
     <Content Include="Content\Client\js\afterLogin.js" />
     <Content Include="Content\Client\js\app.js" />
     <Content Include="Content\Client\js\bootstrap.bundle.js" />
@@ -496,7 +497,6 @@
     <Content Include="Views\Examinee\Detail.cshtml" />
     <Content Include="Views\Test\Index.cshtml" />
     <Content Include="Views\Test\_Index.cshtml" />
-    <Content Include="Views\Test\_ExamResult.cshtml" />
     <Content Include="Views\Login\Register.cshtml" />
     <Content Include="Views\Registration\_Result.cshtml" />
     <Content Include="Views\Test\ExamResult.cshtml" />
@@ -504,6 +504,7 @@
     <Content Include="Views\ExaminationQuestion\Basic.cshtml" />
     <Content Include="Views\ExaminationQuestion\Advance.cshtml" />
     <Content Include="Views\Shared\_LeftNav.cshtml" />
+    <Content Include="Views\Examinee\Index.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="Areas\Admin\Views\Base\" />

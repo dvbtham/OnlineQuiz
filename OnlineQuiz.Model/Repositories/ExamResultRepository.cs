@@ -9,8 +9,9 @@ namespace OnlineQuiz.Model.Repositories
 {
     public interface IExamResultRepository
     {
+
         ExamResult GetExamResult(string examineeId, int examCode);
-        void CompleteTest(string examResultId);
+        void CompleteTest(string examResultId, bool isComplete);
         void UpdateDuration(string examResultId, int remainingTime);
         ExamResultViewModel Get(string examineeId, int examCode);
         void UpdateDetail(string examResultId, string questionId, KeyValuePair model);
@@ -36,14 +37,14 @@ namespace OnlineQuiz.Model.Repositories
             return examResult;
         }
 
-        public void CompleteTest(string examResultId)
+        public void CompleteTest(string examResultId, bool isComplete)
         {
             var examResult = DbContext.ExamResults
                 .FirstOrDefault(x => x.ID.ToString() == examResultId);
 
             if (examResult != null)
             {
-                examResult.Status = true;
+                examResult.Status = isComplete;
                 Update(examResult);
             }
         }

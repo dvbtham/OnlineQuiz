@@ -3,7 +3,6 @@ using OnlineQuiz.Common.ViewModel;
 using OnlineQuiz.Model.Infrastructure;
 using OnlineQuiz.Model.Repositories;
 using System;
-using System.IO;
 using System.Linq;
 using System.Web.Mvc;
 
@@ -30,12 +29,11 @@ namespace OnlineQuiz.WebApp.Controllers
 
         public ActionResult Index(string id)
         {
-            byte? page = 1;
             var session = (ExamineeViewModel)Session["User"];
             if (session.IDExaminee != id)
                 return RedirectToAction("Index", "Login");
 
-            var examVm = GetExaminationViewModel(id, page);
+            var examVm = GetExaminationViewModel(id);
 
             if (examVm.ExamResult.Status)
             {
@@ -52,41 +50,33 @@ namespace OnlineQuiz.WebApp.Controllers
                 return RedirectToAction("Index", "Login");
 
             var examResult = examResultRepository.GetExamResult(examineeId, 1);
+
             return View(examResult);
         }
 
         [HttpPost]
         public ActionResult Save([System.Web.Http.FromBody] SaveExamViewModel data)
         {
-            if (data.Page > 0)
-            {
-                examResultRepository
-                .UpdateDuration(data.ExamResultID, data.RemainingTime);
+            examResultRepository.CompleteTest(data.ExamResultID, isComplete: data.Status);
 
-                var examVm = GetExaminationViewModel(data.IDExaminee, data.Page);
+            examResultRepository.UpdateDuration(data.ExamResultID, data.RemainingTime);
 
-                Update(data);
+            UpdateDetail(data);
 
+            if (data.Status)
                 return Json(new
                 {
-                    isRenderHtml = true,
-                    data = ConvertViewToString("_Index", examVm)
-                });
-            }
-            else
-            {
-                examResultRepository.CompleteTest(data.ExamResultID);
-                Update(data);
-
-                return Json(new
-                {
-                    isRenderHtml = false,
                     url = "/Test/ExamResult?examineeId=" + data.IDExaminee
                 });
-            }
+
+            return Json(new
+            {
+                model = data
+            });
+
         }
 
-        private void Update(SaveExamViewModel data)
+        private void UpdateDetail(SaveExamViewModel data)
         {
             try
             {
@@ -106,37 +96,19 @@ namespace OnlineQuiz.WebApp.Controllers
             {
             }
         }
-
-        private string ConvertViewToString(string viewName, object model)
-        {
-            ViewData.Model = model;
-            using (StringWriter writer = new StringWriter())
-            {
-                ViewEngineResult vResult = ViewEngines.Engines.FindPartialView(ControllerContext, viewName);
-                ViewContext vContext = new ViewContext(ControllerContext, vResult.View, ViewData, new TempDataDictionary(), writer);
-                vResult.View.Render(vContext, writer);
-                return writer.ToString();
-            }
-        }
+                
 
         [NonAction]
-        private ExaminationViewModel GetExaminationViewModel(string id, byte? page = 1)
+        private ExaminationViewModel GetExaminationViewModel(string id)
         {
             var examResult = examResultRepository.Get(id, 1);
 
-            int pageSize = 5;
-            int pageNumber = page ?? 1;
-
             var questionList = examinationRepository.GetExaminationQuestions(examResult).ToList();
-            int totalCount = questionList.Count;
 
             var examVm = new ExaminationViewModel
             {
                 ExamResult = examResult,
-                Page = page.Value,
-                TotalItems = totalCount,
-                TotalPages = (byte)Math.Ceiling((double)totalCount / pageSize),
-                ExaminationQuestions = questionList.OrderBy(x => x.QuestionID).Skip((page.Value - 1) * pageSize).Take(pageSize),
+                ExaminationQuestions = questionList.OrderBy(x => x.QuestionID),
                 Examinee = accountRepository.GetAttendanceInfo(id)
             };
             return examVm;

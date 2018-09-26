@@ -4,43 +4,36 @@
 }
 
 
-@{
-    if (Model.Page > 1)
-    {
-        b = (Model.Page * 5) - 4;
-    }
-}
 @foreach (var item in Model.ExaminationQuestions)
 {
-
     <div class="question-item" data-id="@item.QuestionID" id="q_@item.QuestionID">
         <p><b>Câu @b: @item.QuestionContent</b></p>
         <ul>
             <li>
                 <div class="form-check">
                     <label class="form-check-label pointer">
-                        <input type="radio" @(item.MyAnswer == "A" ? "checked=checked" : "") class="form-check-input" value="A_@(item.QuestionID)" name="@(item.QuestionID)_answer"> @item.AAnswer
+                        <input data-qnav="q_@item.QuestionID" type="radio" @(item.MyAnswer == "A" ? "checked=checked" : "") class="form-check-input" value="A_@(item.QuestionID)" name="@(item.QuestionID)_answer"> @item.AAnswer
                     </label>
                 </div>
             </li>
             <li>
                 <div class="form-check">
                     <label class="form-check-label pointer">
-                        <input type="radio" class="form-check-input" @(item.MyAnswer == "B" ? "checked=checked" : "") value="B_@(item.QuestionID)" name="@(item.QuestionID)_answer"> @item.BAnswer
+                        <input data-qnav="q_@item.QuestionID" type="radio" class="form-check-input" @(item.MyAnswer == "B" ? "checked=checked" : "") value="B_@(item.QuestionID)" name="@(item.QuestionID)_answer"> @item.BAnswer
                     </label>
                 </div>
             </li>
             <li>
                 <div class="form-check">
                     <label class="form-check-label pointer">
-                        <input type="radio" class="form-check-input" @(item.MyAnswer == "C" ? "checked=checked" : "") value="C_@(item.QuestionID)" name="@(item.QuestionID)_answer">@item.CAnswer
+                        <input data-qnav="q_@item.QuestionID" type="radio" class="form-check-input" @(item.MyAnswer == "C" ? "checked=checked" : "") value="C_@(item.QuestionID)" name="@(item.QuestionID)_answer">@item.CAnswer
                     </label>
                 </div>
             </li>
             <li>
                 <div class="form-check">
                     <label class="form-check-label pointer">
-                        <input type="radio" class="form-check-input" @(item.MyAnswer == "D" ? "checked=checked" : "") value="D_@(item.QuestionID)" name="@(item.QuestionID)_answer">@item.DAnswer
+                        <input data-qnav="q_@item.QuestionID" type="radio" class="form-check-input" @(item.MyAnswer == "D" ? "checked=checked" : "") value="D_@(item.QuestionID)" name="@(item.QuestionID)_answer">@item.DAnswer
                     </label>
                 </div>
             </li>
@@ -55,19 +48,6 @@
     <div class="row">
         <div class="col-md-6">
             <ul class="pagination">
-                @{
-                    var isFirst = Model.Page <= 1 ? "disabled" : "";
-                    var isEnd = Model.Page >= Model.TotalPages ? "disabled" : "";
-                }
-                @*<li class="page-item @isFirst"><a class="page-link @isFirst" href="@Url.Action("Index", "Test", new { page = (Model.Page - 1) })">Trở về</a></li>
-                    <li class="page-item @isEnd"><a class="page-link @isEnd" href="@Url.Action("Index", "Test", new { page = (Model.Page + 1) })">Câu tiếp</a></li>*@
-                <li class="page-item @isFirst li-prev"><a data-page="@(Model.Page - 1)" class="page-link @isFirst qprev" href="#">Trở về</a></li>
-                <li class="page-item @isEnd li-next"><a data-page="@(Model.Page + 1)" class="page-link @isEnd qnext" href="#">Câu tiếp</a></li>
-            </ul>
-        </div>
-
-        <div class="col-md-6">
-            <ul class="pagination pull-right">
                 <li class="page-item"><a class="page-link" id="complete" data-page="0" href="#">Nộp bài</a></li>
             </ul>
         </div>

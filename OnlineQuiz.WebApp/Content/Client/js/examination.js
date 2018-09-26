@@ -8,7 +8,7 @@
 
         minutes = minutes < 10 ? "0" + minutes : minutes;
         seconds = seconds < 10 ? "0" + seconds : seconds;
-        
+
         $("#duration").text(minutes + ":" + seconds);
 
         if (--timer < 0) {
@@ -21,66 +21,65 @@
             $(".qnext").addClass("disabled");
         }
     }, 1000);
-    $(".album").removeClass("mt-20");
 
-    //$("#content").on('change', '.question-item input', function () {
-    //    var data = $(this).val();
-    //    var qid = data.substr(2, data.length);
+    var saveInterval = setInterval(() => {
+        save();
+    }, 1000);
 
-    //    if (questions.filter(x => x.substr(2, data.length) === qid).length === 0) {
-    //        questions.push(data);
-    //    }
-    //    else {
-    //        for (var i = questions.length - 1; i >= 0; i--) {
-    //            if (questions[i].substr(2, questions[i].length) === data.substr(2, data.length)) {
-    //                questions.splice(i, 1);
-    //                questions.push(data);
-    //            }
-    //        }
-    //    }
-    //    console.log(data);
-    //    localStorage.setItem("questions", JSON.stringify(questions));
-    //});
-
-    $("#content").on('click', '.qnext', function (e) {
-        e.preventDefault();
-        save(e);
-        return false;
+    $("input[type='radio']").on('change', function (e) {
+        const qnavClassName = $(e.target).data('qnav');
+        $("." + qnavClassName + "").addClass('highlight-question');
     });
-
-    $("#content").on('click', '.qprev', function (e) {
-        e.preventDefault();
-        save(e);
-        return false;
-    });
-
+    
     $("#content").on('click', '#complete', function (e) {
         e.preventDefault();
-        if (!confirm("Bạn sẽ không được làm lại bài thi này, bạn có muốn tiếp tục?")) return;
-        save(e);
-        clearInterval(interval);
+        swal("Bạn sẽ không được làm lại bài thi này, bạn có muốn tiếp tục?", {
+            buttons: {
+                cancel: "Đóng",
+                agree: {
+                    text: "Tiếp tục",
+                    value: "agree"
+                }
+            }
+        })
+            .then((value) => {
+                switch (value) {
+
+                    case "agree":
+                        save(e);
+                        clearInterval(interval);
+                        break;
+
+                    default:
+                        return;
+                }
+            });
         return false;
     });
 
     function save(e) {
-        var link = $(e.target);
-        const page = link.data("page");
+       
         const checkedOptions = $("input[type='radio']:checked");
         var questions = [];
+
         $.each(checkedOptions, function (i, e) {
             questions.push($(e).val());
         });
+
         duration = parseInt($("#duration").text().substring(0, 2));
+
         const data = {
             ExamResultID: $("#ExamResultID").val(),
             IDExaminee: $("#idExaminee span").text(),
-            Page: page,
             Content: JSON.stringify(questions),
-            RemainingTime: duration < 0 ? 0 : duration
-
+            RemainingTime: duration < 0 ? 0 : duration + 1,
+            Status: false
         };
 
-        console.log(data);
+        if (e) {
+            data.Status = true;
+            clearInterval(saveInterval);
+        }
 
         $.ajax({
             url: "/Test/Save",
@@ -89,13 +88,12 @@
             dataType: "json",
             data: JSON.stringify(data),
             success: function (res) {
-                if (res.isRenderHtml)
-                    $("#content").html(res.data);
-                else
+                if (res.url) {
                     window.location.href = res.url;
-               
+                }
             },
-            error: function () {
+            error: function (res) {
+                console.log(res);
                 alert("Đã xảy ra lỗi. Vui lòng kiểm tra lại!");
             }
         });

@@ -1,17 +1,21 @@
 ﻿using OnlineQuiz.Common.ViewModel;
 using OnlineQuiz.Model.Repositories;
-using System.Linq;
 using System.Web.Mvc;
 
 namespace OnlineQuiz.WebApp.Controllers
 {
-    public class ExamineeController : BaseController
+    public class ExamineeController : Controller
     {
         private readonly IAccountRepository accountRepository;
 
         public ExamineeController(IAccountRepository accountRepository)
         {
             this.accountRepository = accountRepository;
+        }
+
+        public ActionResult Index()
+        {
+            return View();
         }
 
         public ActionResult Detail(string id)

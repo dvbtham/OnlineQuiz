@@ -5,59 +5,67 @@
     int qIndex = 1;
 }
 <input type="hidden" id="ExamResultID" value="@Model.ExamResult.ID" />
-
 <div class="row">
-    <div class="col-md-12">
-        <div class="card mb-4 test transparent">
-            <div class="card-header transparent">
-                <strong>Hội đồng thi: Trường ĐH Đông Á</strong>
-                <strong class="ml-15" id="credit">Tên chứng chỉ: @Model.Examinee.InformationTechnologySkillName</strong>
-                @if (!string.IsNullOrEmpty(Model.Examinee.QuestionModuleName))
-                {
-                    <strong class="ml-15" id="moduleName">Tên module: @Model.Examinee.QuestionModuleName</strong>
-                }
-
-                <strong class="ml-15" id="idExaminee">Mã thí sinh: <span>@Model.Examinee.IDExaminee</span></strong>
-                <strong class="ml-15" id="fullName">Họ tên: @(Model.Examinee.LastName + " " + Model.Examinee.FirstName)</strong>
+    <div class="col-md-12 col-sm-12">
+        <nav aria-label="breadcrumb">
+            <ol class="breadcrumb">
+                <li class="breadcrumb-item"><a href="/">Trang chủ</a></li>
+                <li class="breadcrumb-item"><a href="#">Library</a></li>
+                <li class="breadcrumb-item active" aria-current="page">Thi</li>
+            </ol>
+        </nav>
+    </div>
+</div>
+<div class="row">
+    <div class="col-md-3 mb-10">
+        <div class="card mb-4 box-shadow">
+            <div class="card-header">
+                <span class="ml-15 mt-10 mb-10">Thời gian làm bài: <strong class="primary-color" id="@(Model.ExamResult.Status ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0" + Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </strong></span>
             </div>
-        </div>
-        <div class="card-body">
-            <div class="row">
-                <div class="col-md-2 mb-10">
-                    <div class="sticky-sidebar">
-                        <p>Thời gian làm bài</p>
-                        <p class="time box-shadow " id="@(Model.ExamResult.Status ? "" : "duration")">@(Model.ExamResult.Duration < 10 ? "0" + Model.ExamResult.Duration + ":00" : Model.ExamResult.Duration + ":00")  </p>
 
-                        <div class="question-nav">
-                            <p class="mt-15 mb-10">Điều hướng bài kiểm tra</p>
-                            <hr style="margin-top: 5px;">
-                            <ul>
-                                @foreach (var item in Model.ExaminationQuestions)
-                                {
-                                    <li><a href="#q_@item.QuestionID">@qIndex</a></li>
-                                    { qIndex++; }
-                                }
-                            </ul>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-md-10">
-                    <div id="content">
-                        @if (Model.ExamResult.Status)
+            <div class="sticky-sidebar card-body pt-6">
+                <div class="question-nav">
+                    <p class="mt-0 mb-10">Điều hướng câu hỏi</p>
+                    <hr style="margin-top: 5px;">
+                    <ul>
+                        @foreach (var item in Model.ExaminationQuestions)
                         {
-                            <div class="alert alert-success">Bạn đã hoàn tất bài thi này</div>
+                            <li>
+                                <a class="@(string.IsNullOrEmpty(item.MyAnswer) ? "" : "selected-question") q_@item.QuestionID" href="#q_@item.QuestionID">@qIndex</a>
+                            </li>
+                            { qIndex++; }
                         }
-                        else
-                        {
-                            @Html.Partial("_Index", Model)
-                        }
-
-                    </div>
+                    </ul>
                 </div>
             </div>
         </div>
     </div>
+    <div class="col-md-9">
+        <div id="content" class="card">
+            <div class="card-header">
+                <span class="ml-15 mt-10">Hội đồng thi: Trường ĐH Đông Á</span>
+                <span class="ml-15" id="credit">Tên chứng chỉ: @Model.Examinee.InformationTechnologySkillName</span>
+                @if (!string.IsNullOrEmpty(Model.Examinee.QuestionModuleName))
+                {
+                    <span class="ml-15" id="moduleName">Tên module: @Model.Examinee.QuestionModuleName</span>
+                }
+
+                <span class="ml-15" id="idExaminee">Mã thí sinh: <span>@Model.Examinee.IDExaminee</span></span>
+                <span class="ml-15 mb-10" id="fullName">Họ tên: @(Model.Examinee.LastName + " " + Model.Examinee.FirstName)</span>
+            </div>
+            <div class="card-body">
+                @if (Model.ExamResult.Status)
+                {
+                    <div class="alert alert-success">Bạn đã hoàn tất bài thi này</div>
+                }
+                else
+                {
+                    @Html.Partial("_Index", Model)
+                }
+            </div>
+        </div>
+    </div>
+
 </div>
 @section scripts {
     <script src="~/Content/Client/js/examination.js"></script>
